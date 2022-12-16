@@ -16,6 +16,10 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('productname');
+            $table->integer('price');
+            $table->integer('listprice')->nullable();
+            $table->integer('price_min')->nullable();
+            $table->integer('price_max')->nullable();
             $table->string('shopname');
             $table->string('brand')->nullable();
             $table->text('description')->nullable();

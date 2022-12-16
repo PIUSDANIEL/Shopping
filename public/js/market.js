@@ -179,22 +179,15 @@ $(document).ready(function () {
             },
                 name: 'id'
             },
-            { data: function (row){
-                return "<span class="
-                        +(row.quantity < 5 ? 'bg-danger' : 'bg-info ')+
-                        " style='padding:5px; border-radius:3px;'>"+row.quantity+"</span>"
+            { data: 'product_item',
+                name:'product_item'
             },
-                name: 'quantity'
+            { data: 'category',
+                name:'category'
             },
-            { data: 'size',
-                name:'size'
+            { data: 'subcat',
+                name:'subcat'
             },
-            { data:'singlesize'},
-            { data:'colour'},
-            { data:'condition'},
-            { data:'search'},
-            { data:'categoryname'},
-            { data:'sub_categoryname'},
 
 
         ],
@@ -208,31 +201,46 @@ $(document).ready(function () {
             }
         },
         {
-            'targets':5,
-            'data':'size',
+            'targets':4,
+            'data':'product_item',
             'render': function(data,type,row,meta){
-                    if(data !== "" && data !== null){
-                        var fffj = data.split(',');
 
-                        var k = " <div class='dropdown open'><button class='btn btn-secondary dropdown-toggle' type='button' id='triggerId' data-toggle='dropdown' aria-haspopup='true'aria-expanded='false'>Available</button><div class='dropdown-menu' aria-labelledby='triggerId'>" ;
-                        $.each(fffj, function (key, val) {
+                var s = "<div class='dropdown open'><button class='btn btn-secondary dropdown-toggle' type='button' id='triggerId' data-toggle='dropdown' aria-haspopup='true'aria-expanded='false'>Available</button><div class='dropdown-menu' aria-labelledby='triggerId'>";
+                $.each(data, function (key, vall) {
+                    var price =  new Intl.NumberFormat('en-NG', { maximumSignificantDigits: 3 }).format(vall['price']);
+                     s +="<a class='dropdown-item'><span class='border border-info m-1 rounded p-1'>"+(vall['size'] === null? 'n/a':vall['size'])+"</span>"
+                     +"<span class='border border-info p-1 m-1 rounded'><i class='fa fa-square' aria-hidden='true' style='color:"+vall['colour']+";'></i></span>"
+                     +"<span class='border "+(vall['qty_in_stock'] < 5 ?'bg-danger':'border-info')+" m-1 rounded p-1'>"+vall['qty_in_stock']+"</span>"
+                     +"<span class='border border-info m-1 rounded p-1'>&#8358;"+price+"</span>"
+                     +"</a>";
+                });
+                s +="</div></div>";
 
-                        var ggg = val.split(':');
-                        k += "<button href='#' class="
-                        +(ggg[3] < 5 ? 'bg-danger dropdown-item' : ' bg-info dropdown-item')+
-                            " style='padding:5px; margin-top:5px; border-radius:3px;'>"+ggg[0]+" : "+ggg[3]+"</button>";
-                        });
-                        k += "</div></div>";
-                        return k
-                    }else{
-
-                        return data
-                    }
+                return s ;
+            }
+        },
+        {
+            'targets':5,
+            'data':'category',
+            'render': function(data,type,row,meta){
 
 
+                     return data[0]['categoryname'];
 
-                }
-        }],
+            }
+        },
+        {
+            'targets':6,
+            'data':'subcat',
+            'render': function(data,type,row,meta){
+
+
+
+                     return data[0]['sub_categoryname'];
+
+            }
+        },
+        ],
 
     });
 
@@ -398,25 +406,55 @@ $(document).ready(function () {
              $('.displaimges').html('');
 
             $('#productid').val(id);
-
+            $('.newattr').html('');
 
             $.each(data.products, function (key, produ) {
 
                 $('#editproductname').val(produ.productname);
-                $('#editprice').val(produ.price);
-                $('#editlistprice').val(produ.listprice);
-                $('#editsinglesize').val(produ.singlesize);
-                $('#editsize').val(produ.size);
-                $('#editcolour').val(produ.colour);
+                //$('#editprice').val(produ.price);
+                $('#editlistprices').val(produ.listprice);
+               // $('#editsinglesize').val(produ.singlesize);
+               // $('#editsize').val(produ.size);
+               // $('#editcolour').val(produ.colour);
                 $('#editbrand').val(produ.brand);
                 $('#editquantity').val(produ.quantity);
                 $('#editcondition').val(produ.condition);
-                $('#editpercentage').val(produ.percentage);
+                $('#editpercentages').val(produ.percentage);
                 $('#editsearch').val(produ.search);
                 $('#editdescription').val(produ.description);
                 $('#editspecification').val(produ.specification);
                 $('.old_main_image').val(produ.main_image);
                 $('.old_images').val(produ.images);
+
+                $.each(produ.product_item, function (keys, variatn) {
+                    $('.newattr').append('<div class="w-100 row rounded removeattr mx-auto mt-2 p-1 " style="background-color: rgb(138, 136, 136);">'
+                    +' <div class="col-12 kkkkkhh">'
+                     +'<i class="fa fa-close text-light me-auto "  aria-hidden="true"></i>'
+                    +'</div>'
+                +'<div class="col-md-4 mt-2">'
+                    +'<label for="size" class="form-label">Size </label>'
+                    +'<input type="text" name="size[]" value="'+variatn['size']+'" class="form-control form-control-sm size" id="size">'
+
+                    +'</div>'
+
+                    +'<div class="col-md-4 mt-2">'
+                    +'<label for="colour" class="form-label">Colour</label>'
+                    +'<input type="color" name="colour[]" value="'+variatn['colour']+'" class="form-control form-control-sm" id="colour" >'
+                    +'</div>'
+
+                    +'<div class="col-md-4 mt-2">'
+                    +'<label for="quantity" class="form-label">Quantity</label>'
+                    +'<input type="number" name="quantity[]" value="'+variatn['qty_in_stock']+'" class="form-control form-control-sm" id="quantity" >'
+                    +'</div>'
+
+                    +'<div class="col-md-4 mt-2">'
+                    +'<label for="price" class="form-label">Price</label>'
+                    +'<input type="number" name="price[]" class="form-control form-control-sm price" id="price" value="'+variatn['price']+'" >'
+
+                    +'</div>'
+
+                    +'</div>');
+                });
 
                 if(produ.main_image !== ""){
                     $('#editmain_image').css('display', 'none');
@@ -428,11 +466,12 @@ $(document).ready(function () {
 
                     $('#editmain_image').css('display', 'block');
                 }
+                console.log(produ.images[0]);
 
-                if(produ.images !== ""){
+                if(produ.images[0]['images'] !== ""){
                     $('#editimages').css('display', 'none');
 
-                        var image = JSON.parse(produ.images);
+                        var image = JSON.parse(produ.images[0]['images']);
                     $.each(image, function (key, images) {
                         //console.log(images);
                         $('.displaimges').append('<div class="card m-1 bb p-0" ><img src="'+ images +'" class="mx-auto rounded"'
@@ -504,7 +543,7 @@ function deletemainimage(){
 
    var id = imagesid;
    var allimage = $('.allimages').attr('data-imagess');
-     console.log(allimage);
+    // console.log(allimage);
 
      $.ajax({
          type: "Post",
@@ -697,7 +736,7 @@ function deletemainimage(){
 
 
 
-                    $('#example1').DataTable().ajax.reload();
+                    $('#example12').DataTable().ajax.reload();
 
                     getproduct();
 
@@ -1742,39 +1781,33 @@ $('#addbrand').submit(function (e) {
 
 
     //Add more size price
-    $('#addmoreattr').click(function (e) {
+    $('.addmoreattr').click(function (e) {
         e.preventDefault();
-        $('#productupload').append('<div class="w-100 row rounded removeattr mx-auto mt-2 p-1 " style="background-color: rgb(138, 136, 136);">'
+        $('.newattr').append('<div class="w-100 row rounded removeattr mx-auto mt-2 p-1 " style="background-color: rgb(138, 136, 136);">'
                     +' <div class="col-12 kkkkkhh">'
                      +'<i class="fa fa-close text-light me-auto "  aria-hidden="true"></i>'
                     +'</div>'
                 +'<div class="col-md-4 mt-2">'
                     +'<label for="size" class="form-label">Size </label>'
-                    +'<input type="text" name="size" value="n/a" class="form-control form-control-sm size" id="size">'
+                    +'<input type="text" name="size[]" value="n/a" class="form-control form-control-sm size" id="size">'
 
                     +'</div>'
 
                     +'<div class="col-md-4 mt-2">'
                     +'<label for="colour" class="form-label">Colour</label>'
-                    +'<input type="color" name="colour" value="" class="form-control form-control-sm" id="colour" >'
+                    +'<input type="color" name="colour[]" value="" class="form-control form-control-sm" id="colour" >'
                     +'</div>'
 
                     +'<div class="col-md-4 mt-2">'
                     +'<label for="quantity" class="form-label">Quantity</label>'
-                    +'<input type="number" name="quantity" value="" class="form-control form-control-sm" id="quantity" >'
+                    +'<input type="number" name="quantity[]" value="" class="form-control form-control-sm" id="quantity" >'
                     +'</div>'
 
                     +'<div class="col-md-4 mt-2">'
                     +'<label for="price" class="form-label">Price</label>'
-                    +'<input type="number" name="price" class="form-control form-control-sm price" id="price" value="" >'
+                    +'<input type="number" name="price[]" class="form-control form-control-sm price" id="price" value="" >'
 
                     +'</div>'
-
-                    +'<div class="col-md-4 mt-2">'
-                            +'<label for="images">images</label>'
-                            +'<input type="file" class="form-control-file" name="images[]" id="images" placeholder="images" aria-describedby="fileHelpId"  multiple>'
-                    +'</div>'
-
 
                     +'</div>');
     });

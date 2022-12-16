@@ -921,7 +921,7 @@
                         {{-- -CAROUSEL --}}
                         <div class="row  d-flex " >
                             <!-- Carousel wrapper -->
-                           
+
                                 <!-- Add images to <div class="fotorama"></div> -->
                                 <div class="col-12 fotorama rounded bg-danger mx-auto"
                                 data-width="1000"
@@ -936,7 +936,7 @@
                                         <img src="{{ asset('images/b2.jpg') }}"  class="rounded" alt="Sunset Over the City"  />
 
                                 </div>
-                           
+
                             <!-- Carousel wrapper -->
 
 
@@ -984,7 +984,12 @@
                                         <img src="{{$productdetail->main_image}}" class="card-img-top" style="height: 10rem;" alt="...">
                                         <div class="card-body px-1 py-0">
                                             <h6 class="card-title">{{$productdetail->productname }}</h6>
-                                            <p class="card-text naira">&#8358;{{ number_format($productdetail->price) }} </p>
+                                            @if ($productdetail->price_min)
+                                            <p class="card-text naira">&#8358;{{ number_format($productdetail->price_min) }} - &#8358;{{ number_format($productdetail->price_max) }}</p>
+                                            @else
+                                            <p class="card-text naira">&#8358;{{ number_format($productdetail->price) }}</p>
+                                            @endif
+
 
                                         </div>
                                     </a>

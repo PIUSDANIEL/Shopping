@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\images;
 use App\Models\Product;
+use App\Models\product_item;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -23,14 +25,13 @@ class Productupload extends Controller
 
             $validate = validator::make($request->all(),[
                 'productname' => 'required|string',
-                'price'       => 'required|integer',
+                'price.*'       => 'required|integer',
                 'listprice'   => 'nullable|integer',
                 'shopname'    => 'required|string',
-                'singlesize'  => 'nullable|string',
-                'size'        => 'nullable|string',
-                'colour'      => 'nullable|string',
+                'size.*'        => 'nullable|string',
+                'colour.*'      => 'nullable|string',
                 'brand'       => 'nullable|string',
-                'quantity'    => 'required|integer',
+                'quantity.*'    => 'required|integer',
                 'description' => 'nullable|string',
                 'search'      => 'required|string',
                 'main_image'      => 'required|dimensions:min_width=300,min_height=300',
@@ -38,7 +39,6 @@ class Productupload extends Controller
                 'images'      => 'required',
                 'images.*'      => 'image|mimes:jpeg,jpg,png,svg,gif|max:2048|dimensions:min_width=300,min_height=300',
                 'uploader'    => 'required|string',
-                'condition'   => 'nullable|string',
                 'categories'  => 'required|string',
                 'sub_categories' => 'required|string',
                 'specification'  => 'nullable|string',
@@ -57,30 +57,48 @@ class Productupload extends Controller
 
                 return response()->json([
                     'status'=>400,
-                    'error'=> $validate->errors(),
+                    'error'=> $validate->errors()
                 ]);
 
             }else{
 
-                $product = new Product;
 
+
+                $product = new product;
                 $product->productname = $request->productname;
-                $product->price       = $request->price;
+              //  $product->price       = $request->price;
                 $product->listprice   = $request->listprice;
                 $product->shopname    = $request->shopname;
-                $product->size        = rtrim($request->size,',') ;
-                $product->singlesize  = $request->singlesize;
-                $product->colour      = $request->colour;
+               // $product->size        = rtrim($request->size,',') ;
+               // $product->singlesize  = $request->singlesize;
+               // $product->colour      = $request->colour;
                 $product->brand       = $request->brand;
-                $product->quantity    = $request->quantity;
+               // $product->quantity    = $request->quantity;
                 $product->description = $request->description;
                 $product->search      = $request->search;
                 $product->uploader    = $request->uploader;
-                $product->condition   = $request->condition;
+               // $product->condition   = $request->condition;
                 $product->categories  = $request->categories;
                 $product->sub_categories = $request->sub_categories;
                 $product->specification  = $request->specification;
                 $product->percentage     = $request->percentage;
+
+                if(count($request->price) == 1){
+
+                       $product->price       = $request->price[0];
+
+                }
+
+                if(count($request->price) > 1){
+
+                    $product->price = min($request->price);
+
+                    $product->price_min= min($request->price);
+
+                    $product->price_max = max($request->price);
+                }
+
+
 
                 if($request->hasFile('main_image')){
 
@@ -100,6 +118,15 @@ class Productupload extends Controller
                 }
 
 
+
+
+
+               // $product->images = json_encode($imagess);
+
+                $product->main_image =  '/public/images/'.$main_image_name;
+
+                $product->save();
+
                 if($request->hasFile('images')){
                     foreach($request->file('images') as $images){
                         if($images->isValid()){
@@ -118,11 +145,23 @@ class Productupload extends Controller
                     }
                 }
 
+                $productimage = new images;
+                $productimage->product_id = $product->id;
+                $productimage->images = json_encode($imagess);
+                $productimage->save();
 
-                $product->images = json_encode($imagess);
-                $product->main_image =  '/public/images/'.$main_image_name;
+                for($i = 0; $i < count($request->price); $i++ ){
+                    $produc = new product_item;
+                    $produc->product_id =  $product->id;
+                    $produc->SKU = substr(md5(microtime()),0,12);
+                    //dd($request->quantity[$i]);
+                    $produc->qty_in_stock = $request->quantity[$i];
 
-                $product->save();
+                    $produc->size = $request->size[$i];
+                    $produc->colour = $request->colour[$i];
+                    $produc->price = $request->price[$i];
+                    $produc->save();
+               }
 
 
                 return response()->json([
@@ -305,7 +344,7 @@ class Productupload extends Controller
 
     public function productuploadsubcat($cat_id){
 
-        $sub_cat = DB::table('sub_categories')
+        $sub_cat = DB::table('product_subcategories')
                     ->where('categoryid', '=', $cat_id)
                     ->select('id','sub_categoryname')
                     ->get();
@@ -339,28 +378,68 @@ class Productupload extends Controller
 
             }
 
-          $products =  DB::table('products')
+        $products = DB::table('products')
                         ->where('products.shopname','=',$user)
                         ->where('products.deleted','=', 0)
-                        ->join('product_categories','product_categories.id','=','products.categories')
-                        ->join('product_subcategories','product_subcategories.id','=','products.sub_categories')
-                        ->select('products.id','products.main_image','products.productname','products.search','product_categories.categoryname',
-                        'product_subcategories.sub_categoryname')
+                        ->select('id','productname','main_image','categories','sub_categories')
                         ->get();
 
+        $product = json_decode($products,true);
+
+        for($i=0; $i < count($product); $i++){
+           $id = $product[$i]['id'];
+           $categ =  $product[$i]['categories'];
+           $subcateg =  $product[$i]['sub_categories'];
+           $product_item = DB::table('product_items')->where('product_id',$id)->select('qty_in_stock','price','size','colour')->get();
+           $product[$i]['product_item'] =  $product_item;
+
+           $product_cat = DB::table('product_categories')->where('id',$categ)->select('categoryname')->get();
+           $product[$i]['category'] =  $product_cat;
+
+           $product_sub = DB::table('product_subcategories')->where('id',$subcateg)->select('sub_categoryname')->get();
+           $product[$i]['subcat'] =  $product_sub;
+        }
+
           return response()->json([
-            'products' =>  $products
+            'products' =>  $product
           ]);
 
     }
 
     public function geteditproduct($id){
 
-        $products = DB::table('products')->where('id',$id)->get();
+        //$products = DB::table('products')->where('id',$id)->get();
+        $products = DB::table('products')
+        ->where('id','=',$id)
+        ->where('products.deleted','=', 0)
+        //->select('id','productname','main_image','categories','sub_categories')
+        ->get();
+
+                $product = json_decode($products,true);
+
+                for($i=0; $i < count($product); $i++){
+                $id = $product[$i]['id'];
+                $categ =  $product[$i]['categories'];
+                $subcateg =  $product[$i]['sub_categories'];
+
+                $product_item = DB::table('product_items')->where('product_id',$id)->get();
+                $product[$i]['product_item'] =  $product_item;
+
+                $product_cat = DB::table('product_categories')->where('id',$categ)->get();
+                $product[$i]['category'] =  $product_cat;
+
+                $product_sub = DB::table('product_subcategories')->where('id',$subcateg)->get();
+                $product[$i]['subcat'] =  $product_sub;
+
+
+                $product_imgs = DB::table('images')->where('product_id',$id)->select('images')->get();
+                $product[$i]['images'] =  $product_imgs;
+
+                }
 
         return  response()->json([
             'status'=> 200,
-            'products'=> $products
+            'products'=> $product
         ]);
     }
 
@@ -378,7 +457,7 @@ class Productupload extends Controller
                 'message'=>'error! contact the technical team'
             ]);
         }else{
-            Product::where('id', $req->id)->update(['main_image' => '']);
+            product::where('id', $req->id)->update(['main_image' => '']);
 
 
             if(File::exists(public_path($req->image))){
@@ -419,7 +498,7 @@ class Productupload extends Controller
             }
          }
 
-          Product::where('id', $req->id)->update(['images' => '']);
+          images::where('id', $req->id)->update(['images' => '']);
 
           return response()->json([
               'status'=> 200,

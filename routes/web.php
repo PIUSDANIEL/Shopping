@@ -24,60 +24,6 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 
-Route::get('/',[Productupload::class,'product'])->name('/');
-
-
-Route::get('subcatproducts/{id}',[Productupload::class,'subcatproducts'])->name('subcatproducts');
-
-Route::get('flashproducts',[Productupload::class,'flashproducts'])->name('flashproducts');
-
-Route::post('categoryprodfilter',[Productupload::class,'categoryprodfilter'])->name('categoryprodfilter');
-
-Route::post('filter',[Productupload::class,'filter'])->name('filter');
-
-Route::get('products/{cat}',[Productupload::class,'products'])->name('products');
-
-Route::get('/getbrand', [Admincontroller::class,'getbrand'])->name('getbrand');
-
-Route::post('search',[Productupload::class,'search'])->name('search');
-
-Route::get('cart',[CartController::class,'cart'])->name('cart');
-
-Route::get('cart_product',[CartController::class,'cart_product'])->name('cart_product');
-
-Route::get('subtotal',[CartController::class,'subtotal'])->name('subtotal');
-
-Route::get('removeaddcart',[CartController::class,'removeaddcart'])->name('removeaddcart');
-
-Route::get('detailsmodal/{id}',[Productupload::class,'detailsmodal'])->name('detailsmodal');
-
-Route::get('addtocart',[CartController::class, 'addtocart'])->name('addtocart');
-
-Route::post('featured',[Productupload::class,'featured'])->name('featured');
-
-Route::post('flash',[Productupload::class,'flash'])->name('flash');
-
-Route::post('uploadproduct',[Productupload::class,'uploadproduct'])->name('uploadproduct');
-
-Route::post('editproduct', [Productupload::class,'editproduct'])->name('editproduct');
-
-Route::post('deletemainimage', [Productupload::class,'deletemainimage'])->name('deletemainimage');
-
-Route::post('deleteallimages', [Productupload::class,'deleteallimages'])->name('deleteallimages');
-
-
-Route::get('geteditproduct/{id}',[Productupload::class,'geteditproduct'])->name('geteditproduct');
-
-Route::get('deleteproduct/{id}',[Productupload::class,'deleteproduct'])->name('deleteproduct');
-
-Route::get('productsfetch',[Productupload::class,'productsfetch'])->name('productsfetch');
-
-Route::get('allproduct',[Productupload::class,'allproduct'])->name('allproduct');
-
-Route::get('productuploadcat',[Productupload::class,'productuploadcat'])->name('productuploadcat');
-
-Route::get('productuploadsubcat/{cat_id}',[Productupload::class,'productuploadsubcat'])->name('productuploadsubcat');
-
 
 Route::get('/',[Productupload::class,'product'])->name('/');
 
