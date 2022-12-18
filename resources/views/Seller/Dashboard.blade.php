@@ -30,53 +30,42 @@
 
         <div class="row">
             <div class="col-12">
-            <div class="card">
-                <div class="card-header  ">
-                <h6 class="card-title">Products Uploaded</h6>
-                <h6 class="card-title p-1 rounded float-right" style="cursor: pointer; background-color:rgba(136, 167, 167, 0.156);" data-toggle="modal" data-target="#modal-editor">Add product <i class="fa fa-plus text-info" aria-hidden="true"></i></h6>
+                <div class="card">
+                    <div class="card-header  ">
+                    <h6 class="card-title">Products Uploaded</h6>
+                    <h6 class="card-title p-1 rounded float-right" style="cursor: pointer; background-color:rgba(136, 167, 167, 0.156);" data-toggle="modal" data-target="#modal-editor">Add product <i class="fa fa-plus text-info" aria-hidden="true"></i></h6>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body py-2">
+                    <table id="example12" class="table table-bordered table-responsive table-striped  w-100">
+                        <thead>
+                        <tr>
+                        <th>Product</th>
+                        <th>image</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                        <th>Variation</th>
+                        <th>Categories</th>
+                        <th>Sub categories</th>
+
+                        </tr>
+                        </thead>
+
+                        <tfoot>
+                        <tr>
+                            <th>Product</th>
+                            <th>image</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                            <th>Variation</th>
+                            <th>Categories</th>
+                            <th>Sub categories</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                    </div>
+                    <!-- /.card-body -->
                 </div>
-                <!-- /.card-header -->
-                <div class="card-body py-2">
-                <table class="example12 table table-bordered table-responsive table-striped  w-100">
-                    <thead>
-                    <tr>
-                    <th>Product</th>
-                    <th>image</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                    <th>Quantity</th>
-                    <th>Quantities</th>
-                    <th>Size</th>
-                    <th>Colour</th>
-                    <th>Condition</th>
-                    <th>Search</th>
-                    <th>Categories</th>
-                    <th>Sub categories</th>
-
-                    </tr>
-                    </thead>
-
-                    <tfoot>
-                    <tr>
-                    <th>Product</th>
-                    <th>image</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                    <th>Quantity</th>
-                    <th>Quantities</th>
-                    <th>Size</th>
-                    <th>Colour</th>
-                    <th>Condition</th>
-                    <th>Search</th>
-                    <th>Categories</th>
-                    <th>Sub categories</th>
-
-                    </tr>
-                    </tfoot>
-                </table>
-                </div>
-                <!-- /.card-body -->
-            </div>
             <!-- /.card -->
             </div>
             <!-- /.col -->
@@ -105,7 +94,7 @@
 
 
 
-                                <form  id="productupload"  enctype="multipart/form-data" class="row g-3 " >
+                                <form  id="productupload"  enctype="multipart/form-data" class="row g-3 newattrpro" >
 
                                         @csrf
 
@@ -134,30 +123,18 @@
 
                                     </div>
 
-                                    <div class="col-md-4 mt-2">
-                                            <label for="price" class="form-label">Price</label>
-                                            <input type="number" name="price" class="form-control form-control-sm price" id="price" value="{{ old('price') }}" >
-
-                                    </div>
-
-                                    <div class="col-md-4 mt-2">
+                                    <div class=" col-lg-4 mt-2">
                                         <label for="listprice" class="form-label">List Price</label>
-                                        <input type="number" name="listprice" class="form-control form-control-sm listprice" id="listprice" value="{{ old('listprice') }}" >
+                                        <input type="number" name="listprice" class="form-control form-control-sm listprice" id="editlistprice" value="{{ old('listprice') }}" >
 
                                     </div>
 
-                                    <div class="col-md-4 mt-2">
-                                        <label for="singlesize" class="form-label">Size</label>
-                                        <input type="text" name="singlesize" value="{{ old('singlesize') }}" class="form-control form-control-sm singlesize" id="singlesize">
-
+                                    <div class=" col-lg-4 mt-2">
+                                        <label for="percentage" class="form-label">Percentage</label>
+                                        <input type="number" name="percentage" value="{{ old('percentage') }}" class="form-control form-control-sm" id="editpercentage" >
                                     </div>
 
-                                    <div class="col-md-4 mt-2">
-                                            <label for="size" class="form-label">Multiple Size & Price..</label>
-                                            <input type="text" name="size" value="{{ old('size') }}" class="form-control form-control-sm size" id="size"
-                                            data-toggle="modal" data-target="#modal-scpq" readonly>
 
-                                    </div>
 
                                     <div class="col-md-4 mt-2">
                                         <label for="main_image">Main images</label>
@@ -177,30 +154,10 @@
                                     </div>
 
                                     <div class="col-md-4 mt-2">
-                                            <label for="colour" class="form-label">Colour</label>
-                                            <input type="color" name="colour" value="{{ old('colour') }}" class="form-control form-control-sm" id="colour" >
-                                    </div>
-
-                                    <div class="col-md-4 mt-2">
-                                        <label for="quantity" class="form-label">Quantity</label>
-                                        <input type="number" name="quantity" value="{{ old('quantity') }}" class="form-control form-control-sm" id="quantity" >
-                                    </div>
-
-                                    <div class="col-md-4 mt-2">
-                                            <label for="percentage" class="form-label">Percentage</label>
-                                            <input type="number" name="percentage" value="{{ old('percentage') }}" class="form-control form-control-sm" id="percentage" >
-                                    </div>
-
-                                    <div class="col-md-4 mt-2">
-                                            <label for="condition" class="form-label">condition</label>
-                                            <input type="text"  name="condition" value="{{ old('condition') }}" class="form-control form-control-sm" id="condition" >
-                                    </div>
-
-                                    <div class="col-md-4 mt-2">
-                                            <label for="categories">Categories</label>
-                                            <select class="custom-select custom-select-sm" name="categories" id="categories">
-                                            <option selected></option>
-                                            </select>
+                                        <label for="categories">Categories</label>
+                                        <select class="custom-select custom-select-sm" name="categories" id="categories">
+                                        <option selected></option>
+                                        </select>
                                     </div>
 
                                     <div class="col-md-4 mt-2">
@@ -224,7 +181,7 @@
                                     <div class="col-md-4 mt-2">
                                             <label for="search">Posible search</label>
                                             <textarea class="form-control" name="search" value="{{ old('search') }}" id="search" rows="3"></textarea>
-                                            <div class=" p-1 rounded" style="background-color: black;">
+                                            <div class=" p-1 rounded" style="background-color: rgb(55, 54, 54);">
                                                 <p style="color: white;">
                                                     Note : Posible search helps customers to find your products easily
                                                     please write down keywords related to your product without comma
@@ -234,6 +191,47 @@
                                                 </p>
                                             </div>
                                     </div>
+
+
+
+
+                                    <div class="row w-100 mx-auto mt-2 p-1 ">
+                                        <button class="btn btn-sm bg-dark addmoreattrpro" id="">
+                                                Add more attributes <span class="badge badge-primary"> <i class="fa fa-plus" aria-hidden="true"></i> </span>
+                                        </button>
+                                    </div>
+
+                                    <div class="w-100 row rounded mx-auto mt-2 p-1 " style="background-color: rgb(138, 136, 136);">
+
+                                            <div class="col-md-4 mt-2">
+                                                <label for="size" class="form-label">Size </label>
+                                                <input type="text" name="size[]" value="n/a" class="form-control form-control-sm size" id="size">
+
+                                            </div>
+
+                                            <div class="col-md-4 mt-2">
+                                                    <label for="colour" class="form-label">Colour</label>
+                                                    <input type="color" name="colour[]" value="{{ old('colour') }}" class="form-control form-control-sm" id="colour" >
+                                            </div>
+
+                                            <div class="col-md-4 mt-2">
+                                                <label for="quantity" class="form-label">Quantity</label>
+                                                <input type="number" name="quantity[]" value="{{ old('quantity') }}" class="form-control form-control-sm" id="quantity" >
+                                            </div>
+
+                                            <div class="col-md-4 mt-2">
+                                                <label for="price" class="form-label">Price</label>
+                                                <input type="number" name="price[]" class="form-control form-control-sm price" id="price" value="{{ old('price') }}" >
+
+                                            </div>
+
+
+
+
+                                    </div>
+
+
+
 
 
 
@@ -276,22 +274,22 @@
 
                                         @csrf
 
-                                        <div class=" col-lg-4 mt-2">
-                                            <label for="main_image">Main images</label>
-                                            <div class="displaimg">
+                                            <div class=" col-lg-4 mt-2">
+                                                <label for="main_image">Main images</label>
+                                                <div class="displaimg">
 
-                                            </div>
-                                            <input type="file" class="form-control-file" name="main_image" id="editmain_image" placeholder="image" aria-describedby="fileHelpId">
+                                                </div>
+                                                <input type="file" class="form-control-file" name="main_image" id="editmain_image" placeholder="image" aria-describedby="fileHelpId">
                                             </div>
 
 
 
                                             <div class=" col-lg-4 mt-2">
-                                            <label for="images">images</label>
-                                            <div class="displaimges d-flex row ">
+                                                 <label for="images">images</label>
+                                                <div class="displaimges d-flex row ">
 
-                                            </div>
-                                            <input type="file" class="form-control-file" name="imagesegit[]" id="editimages" placeholder="images" aria-describedby="fileHelpId" multiple>
+                                                </div>
+                                                <input type="file" class="form-control-file " name="imagesegit[]" id="editimages" placeholder="images" aria-describedby="fileHelpId" multiple>
                                             </div>
 
                                         <input type="hidden" name="shopname" id="shopname"
@@ -325,59 +323,29 @@
 
                                         </div>
 
-                                        <div class=" col-lg-4 mt-2">
-                                            <label for="price" class="form-label">Price</label>
-                                            <input type="number" name="price" class="form-control form-control-sm price" id="editprice" value="{{ old('price') }}" >
-
-                                        </div>
 
                                         <div class=" col-lg-4 mt-2">
-                                        <label for="listprice" class="form-label">List Price</label>
-                                        <input type="number" name="listprice" class="form-control form-control-sm listprice" id="editlistprice" value="{{ old('listprice') }}" >
+                                            <label for="listprice" class="form-label">List Price</label>
+                                            <input type="number" name="listprice" class="form-control form-control-sm listprice" id="editlistprices" value="{{ old('listprice') }}" >
 
                                         </div>
-
-                                        <div class="col-md-4 mt-2">
-                                            <label for="singlesize" class="form-label">Size</label>
-                                            <input type="text" name="singlesize" value="{{ old('singlesize') }}" class="form-control form-control-sm singlesize" id="editsinglesize">
-                                        </div>
-
-                                        <div class=" col-lg-4 mt-2">
-                                            <label for="size" class="form-label">Multiple Size & Price..</label>
-                                            <input type="text" name="size" value="{{ old('size') }}" class="form-control form-control-sm size" id="editsize"
-                                            data-toggle="modal" data-target="#modal-edit-scpq" readonly>
-
-                                        </div>
-
-
 
 
                                         <div class="col-md-4 mt-2">
                                             <label for="brand">Brands</label>
-                                            <select class="custom-select custom-select-sm brandp" name="brand" id="">
+                                            <select class="custom-select custom-select-sm brandp" name="brand" id="editbrand">
                                             <option selected></option>
                                             </select>
                                         </div>
 
-                                        <div class=" col-lg-4 mt-2">
-                                            <label for="colour" class="form-label">Colour</label>
-                                            <input type="color" name="colour" value="{{ old('colour') }}" class="form-control form-control-sm" id="editcolour" >
-                                        </div>
 
-                                        <div class=" col-lg-4 mt-2">
-                                            <label for="quantity" class="form-label">Quantity</label>
-                                            <input type="number" name="quantity" value="{{ old('quantity') }}" class="form-control form-control-sm" id="editquantity" >
-                                        </div>
 
                                         <div class=" col-lg-4 mt-2">
                                             <label for="percentage" class="form-label">Percentage</label>
-                                            <input type="number" name="percentage" value="{{ old('percentage') }}" class="form-control form-control-sm" id="editpercentage" >
+                                            <input type="number" name="percentage" value="{{ old('percentage') }}" class="form-control form-control-sm" id="editpercentages" >
                                         </div>
 
-                                        <div class=" col-lg-4 mt-2">
-                                            <label for="condition" class="form-label">condition</label>
-                                            <input type="text"  name="condition" value="{{ old('condition') }}" class="form-control form-control-sm" id="editcondition" >
-                                        </div>
+
 
                                         <div class=" col-lg-4 mt-2">
                                             <label for="categories">Categories</label>
@@ -409,6 +377,15 @@
                                             <textarea class="form-control" name="search" value="{{ old('search') }}" id="editsearch" rows="3"></textarea>
                                         </div>
 
+                                        <div class="row w-100 mx-auto mt-2 p-1 ">
+                                            <button class="btn btn-sm bg-dark addmoreattr" id="">
+                                                    Add more attributes <span class="badge badge-primary"> <i class="fa fa-plus" aria-hidden="true"></i> </span>
+                                            </button>
+                                        </div>
+
+                                        <div class="container newattr">
+
+                                        </div>
 
 
 

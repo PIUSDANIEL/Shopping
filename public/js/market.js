@@ -161,6 +161,13 @@ $(document).ready(function () {
             url:"/productsfetch",
             dataSrc: 'products',
         },
+        responsive: true,
+        paging: true,
+        lengthChange: true,
+        info: true,
+        autoWidth: false,
+        searching:true,
+        ordering:true,
         columns:[
             { data:'productname',
                 name:'productname'
@@ -210,7 +217,7 @@ $(document).ready(function () {
                     var price =  new Intl.NumberFormat('en-NG', { maximumSignificantDigits: 3 }).format(vall['price']);
                      s +="<a class='dropdown-item'><span class='border border-info m-1 rounded p-1'>"+(vall['size'] === null? 'n/a':vall['size'])+"</span>"
                      +"<span class='border border-info p-1 m-1 rounded'><i class='fa fa-square' aria-hidden='true' style='color:"+vall['colour']+";'></i></span>"
-                     +"<span class='border "+(vall['qty_in_stock'] < 5 ?'bg-danger':'border-info')+" m-1 rounded p-1'>"+vall['qty_in_stock']+"</span>"
+                     +"<span class='border "+(vall['qty_in_stock'] < 5 ?'bg-danger':'border-info')+" m-1 rounded p-1'>"+(vall['qty_in_stock'] < 5 ?'low : ':'')+""+vall['qty_in_stock']+"</span>"
                      +"<span class='border border-info m-1 rounded p-1'>&#8358;"+price+"</span>"
                      +"</a>";
                 });
@@ -258,8 +265,13 @@ $(document).ready(function () {
         info: true,
         autoWidth: false,
         searching:true,
-        scrollY:600,
-        scrollX:600,
+        ordering:true,
+        responsive: true,
+        paging: true,
+        lengthChange: true,
+        info: true,
+        autoWidth: false,
+        searching:true,
         ordering:true,
         columns:[
             { data:'productname',
@@ -289,10 +301,7 @@ $(document).ready(function () {
             },
               name: 'flash_sale'
             },
-            { data:'shopname'},
-            { data:'price'},
-            { data:'quantity'},
-
+            { data:'shopname'}
         ],
         columnDefs:
         [{
@@ -313,6 +322,13 @@ $(document).ready(function () {
             url:"getcategory",
             dataSrc: 'categories',
         },
+        responsive: true,
+        paging: true,
+        lengthChange: true,
+        info: true,
+        autoWidth: false,
+        searching:true,
+        ordering:true,
 
         columns:[
             { data:'categoryname',
@@ -334,6 +350,13 @@ $(document).ready(function () {
             url:"/getbrand",
             dataSrc: 'brands',
         },
+        responsive: true,
+        paging: true,
+        lengthChange: true,
+        info: true,
+        autoWidth: false,
+        searching:true,
+        ordering:true,
 
         columns:[
             { data:'brand',
@@ -355,6 +378,13 @@ $(document).ready(function () {
             url:"getsubcategory",
             dataSrc: 'subcategory',
         },
+         responsive: true,
+        paging: true,
+        lengthChange: true,
+        info: true,
+        autoWidth: false,
+        searching:true,
+        ordering:true,
 
         columns:[
             { data:'sub_categoryname',
@@ -417,6 +447,8 @@ $(document).ready(function () {
                // $('#editsize').val(produ.size);
                // $('#editcolour').val(produ.colour);
                 $('#editbrand').val(produ.brand);
+               // $('#editcategories').val(produ.categories);
+               // $('#editsub_categories').val(produ.sub_categories);
                 $('#editquantity').val(produ.quantity);
                 $('#editcondition').val(produ.condition);
                 $('#editpercentages').val(produ.percentage);
@@ -424,14 +456,19 @@ $(document).ready(function () {
                 $('#editdescription').val(produ.description);
                 $('#editspecification').val(produ.specification);
                 $('.old_main_image').val(produ.main_image);
-                $('.old_images').val(produ.images);
+                $('.old_images').val(produ.images[0]['images']);
+
+
 
                 $.each(produ.product_item, function (keys, variatn) {
                     $('.newattr').append('<div class="w-100 row rounded removeattr mx-auto mt-2 p-1 " style="background-color: rgb(138, 136, 136);">'
                     +' <div class="col-12 kkkkkhh">'
-                     +'<i class="fa fa-close text-light me-auto "  aria-hidden="true"></i>'
+                    +(keys === 0 ?'':'<i class="fa fa-close text-light me-auto "  aria-hidden="true"></i>')
                     +'</div>'
-                +'<div class="col-md-4 mt-2">'
+
+                    +'<input type="hidden" name="variid[]" value="'+variatn['id']+'" class="form-control form-control-sm" id="variid" >'
+
+                    +'<div class="col-md-4 mt-2">'
                     +'<label for="size" class="form-label">Size </label>'
                     +'<input type="text" name="size[]" value="'+variatn['size']+'" class="form-control form-control-sm size" id="size">'
 
@@ -466,7 +503,7 @@ $(document).ready(function () {
 
                     $('#editmain_image').css('display', 'block');
                 }
-                console.log(produ.images[0]);
+               // console.log(produ.images[0]);
 
                 if(produ.images[0]['images'] !== ""){
                     $('#editimages').css('display', 'none');
@@ -482,7 +519,10 @@ $(document).ready(function () {
 
                     $('.displaimges').append('<p class="text-danger allimages m-1" data-imagess="'+image+'"  style="cursor:pointer;" onclick="deleteimages('+produ.id+')">delete all images</p>');
 
+                }else{
+                    $('#editimages').css('display', 'block');
                 }
+
 
             });
 
@@ -1780,14 +1820,17 @@ $('#addbrand').submit(function (e) {
     });
 
 
-    //Add more size price
+    //Add more size price for edith prod
     $('.addmoreattr').click(function (e) {
         e.preventDefault();
         $('.newattr').append('<div class="w-100 row rounded removeattr mx-auto mt-2 p-1 " style="background-color: rgb(138, 136, 136);">'
                     +' <div class="col-12 kkkkkhh">'
                      +'<i class="fa fa-close text-light me-auto "  aria-hidden="true"></i>'
                     +'</div>'
-                +'<div class="col-md-4 mt-2">'
+
+                    +'<input type="hidden" name="variid[]" value="" class="form-control form-control-sm" id="variid" >'
+
+                    +'<div class="col-md-4 mt-2">'
                     +'<label for="size" class="form-label">Size </label>'
                     +'<input type="text" name="size[]" value="n/a" class="form-control form-control-sm size" id="size">'
 
@@ -1816,6 +1859,39 @@ $('#addbrand').submit(function (e) {
     //REMOVE ANY SIZE PRICE YOU WANT
     $('div').on('click','.kkkkkhh', function () {
         $(this).parent('div').remove();
+    });
+
+    //Add more size price for prod
+    $('.addmoreattrpro').click(function (e) {
+        e.preventDefault();
+        $('.newattrpro').append('<div class="w-100 row rounded removeattr mx-auto mt-2 p-1 " style="background-color: rgb(138, 136, 136);">'
+                    +' <div class="col-12 kkkkkhh">'
+                     +'<i class="fa fa-close text-light me-auto "  aria-hidden="true"></i>'
+                    +'</div>'
+
+                    +'<div class="col-md-4 mt-2">'
+                    +'<label for="size" class="form-label">Size </label>'
+                    +'<input type="text" name="size[]" value="n/a" class="form-control form-control-sm size" id="size">'
+
+                    +'</div>'
+
+                    +'<div class="col-md-4 mt-2">'
+                    +'<label for="colour" class="form-label">Colour</label>'
+                    +'<input type="color" name="colour[]" value="" class="form-control form-control-sm" id="colour" >'
+                    +'</div>'
+
+                    +'<div class="col-md-4 mt-2">'
+                    +'<label for="quantity" class="form-label">Quantity</label>'
+                    +'<input type="number" name="quantity[]" value="" class="form-control form-control-sm" id="quantity" >'
+                    +'</div>'
+
+                    +'<div class="col-md-4 mt-2">'
+                    +'<label for="price" class="form-label">Price</label>'
+                    +'<input type="number" name="price[]" class="form-control form-control-sm price" id="price" value="" >'
+
+                    +'</div>'
+
+                    +'</div>');
     });
 
  });

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Admincontroller;
+use App\Http\Controllers\Cart\Cartcontroller;
 use App\Http\Controllers\Editor\Editorcontroller;
 use App\Http\Controllers\Product\Productupload;
 use App\Http\Controllers\Seller\Sellercontroller;
@@ -42,17 +43,17 @@ Route::get('/getbrand', [Admincontroller::class,'getbrand'])->name('getbrand');
 
 Route::post('search',[Productupload::class,'search'])->name('search');
 
-Route::get('cart',[CartController::class,'cart'])->name('cart');
+Route::get('cart',[Cartcontroller::class,'cart'])->name('cart');
 
-Route::get('cart_product',[CartController::class,'cart_product'])->name('cart_product');
+Route::get('cart_product',[Cartcontroller::class,'cart_product'])->name('cart_product');
 
-Route::get('subtotal',[CartController::class,'subtotal'])->name('subtotal');
+Route::get('subtotal',[Cartcontroller::class,'subtotal'])->name('subtotal');
 
-Route::get('removeaddcart',[CartController::class,'removeaddcart'])->name('removeaddcart');
+Route::get('removeaddcart',[Cartcontroller::class,'removeaddcart'])->name('removeaddcart');
 
 Route::get('detailsmodal/{id}',[Productupload::class,'detailsmodal'])->name('detailsmodal');
 
-Route::get('addtocart',[CartController::class, 'addtocart'])->name('addtocart');
+Route::get('addtocart',[Cartcontroller::class, 'addtocart'])->name('addtocart');
 
 Route::post('featured',[Productupload::class,'featured'])->name('featured');
 

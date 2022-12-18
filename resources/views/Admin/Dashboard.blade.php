@@ -113,29 +113,18 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="card">
-                            <div class="card-header  ">
+                     <!-- /.card -->
+
+                    <div class="card">
+                        <div class="card-header">
                             <h6 class="card-title">Products Uploaded</h6>
                             <h6 class="card-title p-1 rounded float-right" style="cursor: pointer; background-color:rgba(136, 167, 167, 0.156);" data-toggle="modal" data-target="#modal-editor">Add product <i class="fa fa-plus text-info" aria-hidden="true"></i></h6>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body py-2">
-                            <table id="example12" class="table table-bordered table-responsive table-striped  w-100">
-                                <thead>
-                                <tr>
-                                <th>Product</th>
-                                <th>image</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                                <th>Variation</th>
-                                <th>Categories</th>
-                                <th>Sub categories</th>
-
-                                </tr>
-                                </thead>
-
-                                <tfoot>
-                                <tr>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          <table id="example12" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
                                     <th>Product</th>
                                     <th>image</th>
                                     <th>Edit</th>
@@ -143,13 +132,29 @@
                                     <th>Variation</th>
                                     <th>Categories</th>
                                     <th>Sub categories</th>
-                                </tr>
-                                </tfoot>
-                            </table>
-                            </div>
-                            <!-- /.card-body -->
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                    <th>Product</th>
+                                    <th>image</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                    <th>Variation</th>
+                                    <th>Categories</th>
+                                    <th>Sub categories</th>
+                            </tr>
+                            </tfoot>
+                          </table>
                         </div>
-                    <!-- /.card -->
+                        <!-- /.card-body -->
+                      </div>
+                      <!-- /.card -->
                     </div>
                     <!-- /.col -->
                 </div>
@@ -177,7 +182,7 @@
 
 
 
-                                        <form  id="productupload"  enctype="multipart/form-data" class="row g-3 newattr" >
+                                        <form  id="productupload"  enctype="multipart/form-data" class="row g-3 newattrpro" >
 
                                                 @csrf
 
@@ -279,7 +284,7 @@
 
 
                                             <div class="row w-100 mx-auto mt-2 p-1 ">
-                                                <button class="btn btn-sm bg-dark addmoreattr" id="">
+                                                <button class="btn btn-sm bg-dark addmoreattrpro" id="">
                                                         Add more attributes <span class="badge badge-primary"> <i class="fa fa-plus" aria-hidden="true"></i> </span>
                                                 </button>
                                             </div>
@@ -416,7 +421,7 @@
 
                                                 <div class="col-md-4 mt-2">
                                                     <label for="brand">Brands</label>
-                                                    <select class="custom-select custom-select-sm brandp" name="brand" id="">
+                                                    <select class="custom-select custom-select-sm brandp" name="brand" id="editbrand">
                                                     <option selected></option>
                                                     </select>
                                                 </div>
@@ -488,117 +493,11 @@
                             </div>
                             <!-- /.modal -->
 
-                            <!-- /.modal size price quantity-->
-                            <div class="modal fade" id="modal-scpq">
-                                <div class="modal-dialog modal-dialog-scrollable modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                    <h4 class="modal-title">Size, Colour,Price and Quantity</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    </div>
-                                    <div class="modal-body">
 
-                                            @for ($i = 1; $i <= 5; $i++)
-                                                <div class="row border border-info mt-1 rounded">
-                                                    <div class="form-group mx-auto col-10 col-md-4 col-lg-3 mb-3 m-2">
-                                                        <label for="size{{$i}}" class="form-label">Size</label>
-                                                        <input type="text"
-                                                            class="form-control form-control-sm" value="" name="size{{$i}}" id="size{{$i}}" aria-describedby="helpId" placeholder="">
-                                                    </div>
-                                                    <div class="form-group mx-auto col-10 col-md-4 col-lg-3 mb-3 m-2">
-                                                        <label for="colour{{$i}}" class="form-label">Color</label>
-                                                        <input type="color"
-                                                        class="form-control form-control-sm" value="" name="colour{{$i}}" id="colour{{$i}}" aria-describedby="helpId" placeholder="">
-                                                    </div>
-                                                    <div class="form-group mx-auto col-10 col-md-4 col-lg-3 mb-3 m-2">
-                                                        <label for="price{{$i}}" class="form-label">Price</label>
-                                                        <input type="number"
-                                                            class="form-control form-control-sm" value="" name="price{{$i}}" id="price{{$i}}" aria-describedby="helpId" placeholder="" min="1">
-                                                    </div>
-
-                                                    <div class="form-group mx-auto col-10 col-md-4 col-lg-3 mb-3 m-2">
-                                                        <label for="quantity{{$i}}" class="form-label">Quantity</label>
-                                                        <input type="number"
-                                                        class="form-control form-control-sm" value="" name="quantity{{$i}}" id="quantity{{$i}}" aria-describedby="helpId" placeholder="" min="1">
-                                                    </div>
-                                                </div>
-                                            @endfor
-
-
-
-
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            <button type="submit" data-dismiss="modal" id="sizeprice" onclick="sizepriceqty();" class="btn btn-info btn-sm float-right m-2 text-white"  >Save</button>
-
-                                    </div>
-
-                                </div>
-                                <!-- /.modal-content -->
-                                </div>
-                                <!-- /.modal-dialog -->
-                            </div>
-                            <!-- /.modal -->
-
-                                <!-- /.modal size price quantity-->
-                            <div class="modal fade" id="modal-edit-scpq">
-                                <div class="modal-dialog modal-dialog-scrollable modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                    <h4 class="modal-title">Size, Colour,Price and Quantity</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    </div>
-                                    <div class="modal-body">
-
-                                            @for ($i = 1; $i <= 5; $i++)
-                                                <div class="row border border-info mt-1 rounded">
-                                                    <div class="form-group mx-auto col-10 col-md-4 col-lg-3 mb-3 m-2">
-                                                        <label for="editsize{{$i}}" class="form-label">Size</label>
-                                                        <input type="text"
-                                                            class="form-control form-control-sm" value="" name="editsize{{$i}}" id="editsize{{$i}}" aria-describedby="helpId" placeholder="">
-                                                    </div>
-                                                    <div class="form-group mx-auto col-10 col-md-4 col-lg-3 mb-3 m-2">
-                                                        <label for="editcolour{{$i}}" class="form-label">Color</label>
-                                                        <input type="color"
-                                                        class="form-control form-control-sm" value="" name="editcolour{{$i}}" id="editcolour{{$i}}" aria-describedby="helpId" placeholder="">
-                                                    </div>
-                                                    <div class="form-group mx-auto col-10 col-md-4 col-lg-3 mb-3 m-2">
-                                                        <label for="editprice{{$i}}" class="form-label">Price</label>
-                                                        <input type="number"
-                                                            class="form-control form-control-sm" value="" name="editprice{{$i}}" id="editprice{{$i}}" aria-describedby="helpId" placeholder="" min="1">
-                                                    </div>
-
-                                                    <div class="form-group mx-auto col-10 col-md-4 col-lg-3 mb-3 m-2">
-                                                        <label for="editquantity{{$i}}" class="form-label">Quantity</label>
-                                                        <input type="number"
-                                                        class="form-control form-control-sm" value="" name="editquantity{{$i}}" id="editquantity{{$i}}" aria-describedby="helpId" placeholder="" min="1">
-                                                    </div>
-                                                </div>
-                                            @endfor
-
-
-
-
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            <button type="submit" data-dismiss="modal" id="sizeprice" onclick="editsizepriceqty();" class="btn btn-info btn-sm float-right m-2 text-white"  >Save</button>
-
-                                    </div>
-
-                                </div>
-                                <!-- /.modal-content -->
-                                </div>
-                                <!-- /.modal-dialog -->
-                            </div>
-                            <!-- /.modal -->
                         </div>
                 </div>
+
+
 
 
 

@@ -178,28 +178,27 @@ class Productupload extends Controller
 
 
         $validate = validator::make($request->all(),[
-            'productid'   => 'required|integer',
-            'productname' => 'required|string',
-            'price'       => 'required|integer',
-            'listprice'   => 'nullable|integer',
-            'shopname'    => 'required|string',
-            'size'        => 'nullable|string',
-            'singlesize'        => 'nullable|string',
-            'colour'      => 'nullable|string',
-            'brand'       => 'nullable|string',
-            'quantity'    => 'required|integer',
-            'description' => 'nullable|string',
-            'search'      => 'required|string',
-            'main_image'      => 'nullable',
-            'main_image.*'    => 'image|mimes:jpeg,jpg,png,svg,gif|max:2048',
-            'images'      => 'nullable',
-            'images.*'      => 'image|mimes:jpeg,jpg,png,svg,gif|max:2048',
-            'uploader'    => 'required|string',
-            'condition'   => 'nullable|string',
-            'categories'  => 'required|string',
-            'sub_categories' => 'required|string',
-            'specification'  => 'nullable|string',
-            'percentage'     => 'nullable|string',
+                'productname' => 'required|string',
+                'variid.*'       =>'nullable|integer',
+                'price.*'       => 'required|integer',
+                'listprice'   => 'nullable|integer',
+                'shopname'    => 'required|string',
+                'size.*'        => 'nullable|string',
+                'colour.*'      => 'nullable|string',
+                'brand'       => 'nullable|string',
+                'quantity.*'    => 'required|integer',
+                'description' => 'nullable|string',
+                'search'      => 'required|string',
+                'main_image'      => 'nullable|dimensions:min_width=300,min_height=300',
+                'main_image.*'    => 'image|mimes:jpeg,jpg,png,svg,gif|max:2048',
+                'images'      => 'nullable',
+                'images.*'      => 'image|mimes:jpeg,jpg,png,svg,gif|max:2048|dimensions:min_width=300,min_height=300',
+                'uploader'    => 'required|string',
+                'categories'  => 'required|string',
+                'sub_categories' => 'required|string',
+                'specification'  => 'nullable|string',
+                'percentage'     => 'nullable|string',
+                
 
         ]);
 
@@ -267,30 +266,67 @@ class Productupload extends Controller
 
 
 
-            Product::where('id', $request->productid)
+            product::where('id', $request->productid)
             ->update([
 
                'productname' => $request->productname,
-               'price' => $request->price,
+               //'price' => $request->price,
                'listprice' => $request->listprice,
                'shopname' => $request->shopname,
-               'size' => $request->size,
-               'singlesize' => $request->singlesize,
-               'colour' => $request->colour,
+              // 'size' => $request->size,
+              // 'singlesize' => $request->singlesize,
+              // 'colour' => $request->colour,
                'brand' => $request->brand,
-               'quantity' => $request->quantity,
+               //'quantity' => $request->quantity,
                'description' => $request->description,
                'search' => $request->search,
                'uploader' => $request->uploader,
-               'condition' => $request->condition,
+              // 'condition' => $request->condition,
                'categories' => $request->categories,
                'sub_categories' => $request->sub_categories,
                'specification' => $request->specification,
                'percentage' => $request->percentage,
                'main_image' =>   $new_main_image,
-               'images' => $newimages
+              // 'images' => $newimages
 
             ]);
+
+            images::where('product_id', $request->productid)->update([
+                'images'=> $newimages
+            ]);
+
+            for($i = 0; $i < count($request->price); $i++ ){
+                if($request->variid[$i] !== ""){
+                product_item::where('id', $request->variid[$i])->update([
+                    'size'=> $request->size[$i],
+                    'qty_in_stock' => $request->quantity[$i],
+                    'colour' => $request->colour[$i],
+                    'price' => $request->price[$i],
+
+                ]);
+             }
+
+             for($i = 0; $i < count($request->price); $i++ ){
+                if($request->variid[$i] == ""){
+                    $produc = new product_item;
+                    $produc->product_id =$request->productid ;
+                    $produc->SKU = substr(md5(microtime()),0,12);
+                    //dd($request->quantity[$i]);
+                    $produc->qty_in_stock = $request->quantity[$i];
+       
+                    $produc->size = $request->size[$i];
+                    $produc->colour = $request->colour[$i];
+                    $produc->price = $request->price[$i];
+                    $produc->save();
+                }
+             }
+
+
+            
+                
+           }
+
+
 
 
 
