@@ -441,22 +441,21 @@ $(document).ready(function () {
             $.each(data.products, function (key, produ) {
 
                 $('#editproductname').val(produ.productname);
-                //$('#editprice').val(produ.price);
+
                 $('#editlistprices').val(produ.listprice);
-               // $('#editsinglesize').val(produ.singlesize);
-               // $('#editsize').val(produ.size);
-               // $('#editcolour').val(produ.colour);
+
                 $('#editbrand').val(produ.brand);
-               // $('#editcategories').val(produ.categories);
-               // $('#editsub_categories').val(produ.sub_categories);
+
                 $('#editquantity').val(produ.quantity);
                 $('#editcondition').val(produ.condition);
                 $('#editpercentages').val(produ.percentage);
                 $('#editsearch').val(produ.search);
-                $('#editdescription').val(produ.description);
-                $('#editspecification').val(produ.specification);
+
+                $('#editdescription').summernote('code',produ.description) ;
+
+                $('#editspecification').summernote('code',produ.specification);
                 $('.old_main_image').val(produ.main_image);
-                $('.old_images').val(produ.images[0]['images']);
+                $('.old_images').val(produ.images);
 
 
 
@@ -466,7 +465,7 @@ $(document).ready(function () {
                     +(keys === 0 ?'':'<i class="fa fa-close text-light me-auto "  aria-hidden="true"></i>')
                     +'</div>'
 
-                    +'<input type="hidden" name="variid[]" value="'+variatn['id']+'" class="form-control form-control-sm" id="variid" >'
+                    +'<input type="hidden" name="sku[]" value="'+variatn['SKU']+'" class="form-control form-control-sm" id="sku" >'
 
                     +'<div class="col-md-4 mt-2">'
                     +'<label for="size" class="form-label">Size </label>'
@@ -503,12 +502,12 @@ $(document).ready(function () {
 
                     $('#editmain_image').css('display', 'block');
                 }
-               // console.log(produ.images[0]);
+                //console.log(produ.images);
 
-                if(produ.images[0]['images'] !== ""){
+                if(produ.images !== ""){
                     $('#editimages').css('display', 'none');
 
-                        var image = JSON.parse(produ.images[0]['images']);
+                    var image = produ.images.split(',');
                     $.each(image, function (key, images) {
                         //console.log(images);
                         $('.displaimges').append('<div class="card m-1 bb p-0" ><img src="'+ images +'" class="mx-auto rounded"'
@@ -652,7 +651,7 @@ function deletemainimage(){
 
 
 
-                       $('#example1').DataTable().ajax.reload();
+                       $('#example12').DataTable().ajax.reload();
 
                     }else{
 
@@ -1163,98 +1162,123 @@ $('#editsubcategory').submit(function (e) {
          $('#detailsdesc').html('');
          $('#detailsspec').html('');
          $('#detailsize').html('');
-         $('.caro').html('');
+         $('.carousel-inner').html('');
+         $('.mod-content').html('');
+         $('#detailsqty').html('');
+         $('#detailscolour').html('');
+         $('.detailsinstock').html('');
+         $('.varia').html('');
+         $('.variations').html('');
+         $('.variation').html('');
+         $('.quantity-error').html('');
+
 
 
        $.get("/detailsmodal/"+id,function(response) {
-                //console.log(response.message);
+
             if(response.status === 200){
                 $.each(response.message, function (key, detais) {
-                    //$('#detailsprice').append('&#8358;');
-                   // $('#detailslistprice').append('&#8358;');
 
-                var price =  new Intl.NumberFormat('en-NG', { maximumSignificantDigits: 3 }).format(detais.price);
-                var listprice =  new Intl.NumberFormat('en-NG',{ maximumSignificantDigits: 3 }).format(detais.listprice);
+
+                    var price =  new Intl.NumberFormat('en-NG', { maximumSignificantDigits: 3 }).format(detais.price);
+                    var pricemin =  new Intl.NumberFormat('en-NG', { maximumSignificantDigits: 3 }).format(detais.price_min);
+                    var pricemax =  new Intl.NumberFormat('en-NG', { maximumSignificantDigits: 3 }).format(detais.price_max);
+                    var listprice =  new Intl.NumberFormat('en-NG',{ maximumSignificantDigits: 3 }).format(detais.listprice);
 
                     $('#detailsname').append(detais.productname);
                     $('#detailsbrand').append(detais.brand);
-                    $('#detailsprice').append('&#8358;'+price);
                     $('#detailslistprice').append('&#8358;'+listprice);
                     $('#detailspercent').append('&#37;'+detais.percentage);
                     $('#detailsdesc').append(detais.description);
                     $('#detailsspec').append(detais.specification);
 
-                    if(detais.size != "" && detais.size != null){
-                        //console.log(detais.size);
-                        var si = detais.size.split(',');
 
-                            $.each( si, function (key, siz) {
-                                var sizesp = siz.split(':');
-                                    //console.log(sizesp);
-                                   // console.log(sizesp[1]);
-                                var mone = new Intl.NumberFormat('en-NG', { maximumSignificantDigits: 3 }).format(sizesp[2]);
-                                 var clo = sizesp[1].slice(1);
-                                 var szz = sizesp[0].replace(/ +/g, "");
+                    if(detais.variation.length == 1){
+                        $('#detailsprice').append('&#8358;'+price);
 
-                                $('#detailsize').append('<div class="col-11 m-3 d-flex justify-content-around">'
-                                +'<h4 class="text-info">'+sizesp[0]+'</h4>  '
-                                +'<i class="fa fa-square " aria-hidden="true" style="margin-top:1px; margin-left:10px; font-size:25px; color:'+sizesp[1]+';"></i>'
-                                +'<h5 style="margin-left:20px;">&#8358; '+mone+'</h5>'
-                                +'<input  type="number" class="w-25 h-75 border border-info " id="'+szz+sizesp[3]+clo+sizesp[2]+'" value="" min="1" max="'+sizesp[3]+'" placeholder="Qty">'
-                                +'<button class="btn btn-sm btn-info  h-75" onclick="add_to_cart(\''+detais.id+'\',\''+sizesp[0]+'\',\''+sizesp[1]+'\',\''+sizesp[2]+'\','+sizesp[3]+',\''+detais.main_image+'\',\''+detais.productname+'\')" style="margin-left:10px;"><i class="fa fa-shopping-cart"></i></button>'
-                                +'</div>');
-                            });
+                        //var ssize =detais.variation[0]['size'] ;
+
+                        $('#detailsize').append('Size | '+detais.variation[0]['size']);
+
+                        $('#detailsqty').append('<div class="input-group mb-3">'
+                          +'<input type="number" class="form-control form-control-sm"  aria-label="Button" aria-describedby="" id="'+detais.variation[0]['SKU']+'" value="" min="1" max="" placeholder="Qty">'
+                          +'<button class="btn btn-sm btn-info px-2" type="button" onclick="add_to_cart('+id+',\''+detais.variation[0]['size']+'\',\''+detais.variation[0]['colour']+'\',\''+detais.variation[0]['price']+'\',\''+detais.variation[0]['qty_in_stock']+'\',\''+detais.main_image+'\',\''+detais.productname+'\',\''+detais.variation[0]['SKU']+'\',\''+detais.shopname+'\')" id="">Add to cart <i class="fa fa-shopping-basket" aria-hidden="true"></i> </button>'
+                          +'</div>');
 
 
+                          if(detais.variation[0]['qty_in_stock'] < 4){
+                            $('.detailsinstock').append('<i class="fa fa-question-circle" aria-hidden="true"></i>  '+detais.variation[0]['qty_in_stock']+'  unit left');
 
-                       // console.log(si);
+                          }
+
+                        $('#detailscolour').append('Colour | <i class="fa fa-square " aria-hidden="true" style="margin-top:1px;  font-size:20px; color:'+detais.variation[0]['colour']+';"></i>');
+
                     }else{
-                       // var sizesp = detais.singlesize.split(':');
+                        $('.variation').append('<button type="button" class="btn btn-sm  mb-3 btn-info">Add to cart <i class="fa fa-shopping-basket ml-2" aria-hidden="true"></i> </button>');
 
-                        //var mone = new Intl.NumberFormat('en-NG', { maximumSignificantDigits: 3 }).format(sizesp[2]);
-                        // console.log(detais.colour);
+                        $('.variation').append('<h5>Variation</h5>');
 
-                         var clo = detais.colour.slice(1);
-                         var szz = detais.singlesize.replace(/ +/g, "");
+                        $('#detailsprice').append('&#8358;'+pricemin+'-  &#8358;'+ pricemax);
 
-                        $('#detailsize').append('<div class="col-11 m-3 d-flex justify-content-around">'
-                        +'<h4 class="text-info">'+detais.singlesize+'</h4>  '
-                        +'<i class="fa fa-square " aria-hidden="true" style="margin-top:1px; margin-left:10px; font-size:25px; color:'+detais.colour+';"></i>'
-                        +'<h5 style="margin-left:20px;">&#8358; '+detais.price+'</h5>'
-                        +'<input  type="number" class="w-25 h-75 border border-info " id="'+szz+detais.quantity+clo+detais.price+'" value="" min="1" max="'+detais.quantity+'" placeholder="Qty">'
-                        +'<button class="btn btn-sm btn-info  h-75" onclick="add_to_cart(\''+detais.id+'\',\''+detais.singlesize+'\',\''+detais.colour+'\',\''+detais.price+'\','+detais.quantity+',\''+detais.main_image+'\')" style="margin-left:10px;"><i class="fa fa-shopping-cart"></i></button>'
-                        +'</div>');
+
+                        $.each(detais.variation, function (keys, varian) {
+
+                            $('.varia').append('<span class="p-1 col m-1 rounded  shadow" style="border: 2px solid '+varian['colour']+';">'+varian['size']+'</span>');
+
+
+
+
+                             var varianprice =  new Intl.NumberFormat('en-NG', { maximumSignificantDigits: 3 }).format(varian['price']);
+
+
+
+                                $('.variations').append('<div class="row rounded p-1 shadow  mt-3"><div class="col-6 col-lg-3">'+varian['size']+'</div>'
+                                +'<div class="col-6 col-lg-1"> <i class="fa fa-square" aria-hidden="true" style="color:'+varian['colour']+';"></i></div>'
+                                +'<div class="col-6 col-lg-3">&#8358;'+varianprice+'</div>'
+                                +'<div class="col-6 col-lg-5"> <div class="input-group ">'
+                                +'<input type="text" class="form-control form-control-sm" aria-label="" id="'+varian['SKU']+'" aria-describedby="button-addon2">'
+                                +'<button class="btn btn-sm btn-info " type="button" onclick="add_to_cart('+id+',\''+varian['size']+'\',\''+varian['colour']+'\',\''+varian['price']+'\',\''+varian['qty_in_stock']+'\',\''+detais.main_image+'\',\''+detais.productname+'\',\''+varian['SKU']+'\',\''+detais.shopname+'\')" id="">Add <i class="fa fa-shopping-basket" aria-hidden="true"></i> </button>'
+                                +'</div> </div>'
+                                +(varian['qty_in_stock'] < 4 ? '<div class=" col-12 mt-n5"><p class="text-danger small "><i class="fa fa-question-circle" aria-hidden="true"></i> '+varian['qty_in_stock']+' units left</p></div>':'')
+                                +'</div>');
+
+
+
+                        });
+
+
                     }
 
 
-                 $('.caro').append('<div class="carousel-item rounded active">'
-                 +'<img src="'+detais.main_image+'" class="d-block w-100" alt="...">'
-                 +'<div class="carousel-caption d-none d-md-block">'
-                     +'<h5>First slide label</h5>'
-
-                 +'</div>'
-                +'</div>'
-                );
 
 
-                  //console.log(JSON.parse(detais.images));
-                    var images = JSON.parse(detais.images);
-                    console.log(images);
+                    $('.carousel-inner').append('<div class="carousel-item rounded border border-0 shadow active"><div class="card border border-0" ><img src="'+detais.main_image+'" onclick="openModal();currentSlide(1)" class="w-100 d-block card-img-top" alt=""></div></div>');
 
-                    $.each(images, function (key, imag) {
-                         $('.caro').append('<div class="carousel-item rounded">'
-                         +'<img src="'+imag+'" class="d-block w-100" alt="...">'
-                         +'<div class="carousel-caption d-none d-md-block">'
-                             +'<h5>First slide label</h5>'
+                    $.each(detais.images, function (keys, immm) {
 
-                         +'</div>'
-                        +'</div>'
-                       );
+                        $('.carousel-inner').append('<div class="carousel-item rounded border border-0 shadow"><div class="card border border-0" ><img src="'+immm+'" onclick="openModal();currentSlide('+keys + 2 +')" class="w-100 d-block card-img-top" alt=""></div></div>');
+                    })
 
-                    });
+
+                    $('.mod-content').append('<div class="mySlides"><img src="'+detais.main_image+'" style="width:100%"></div>');
+
+                    $.each(detais.images, function (keys, immm) {
+
+                        $('.mod-content').append('<div class="mySlides"><img src="'+immm+'" style="width:100%"></div>');
+                    })
+
+                    $('.mod-content').append('<a class="prev bg-info" onclick="plusSlides(-1)">&#10094;</a>');
+
+                    $('.mod-content').append('<a class="next bg-info" onclick="plusSlides(1)">&#10095;</a>');
+
+
+
+
 
 
                 });
+
+
 
             }
 
@@ -1331,30 +1355,34 @@ function editsizepriceqty(){
 
 
 //ADD TO CART
-function add_to_cart(id, size, colo, price, available,image,productname){
+function add_to_cart(id, size, colo, price, qty_in_stock,image,productname,sku,shopname){
     $(".alert-danger").html('');
+
 
     //alert(price);
     $('.quantity-error').html('');
-    var id = id;
+    var product_id = id;
     var size = size;
     var colo = colo;
     var price = price;
-    var available = available;
+    var sku = sku;
+    var shopname = shopname;
+    var qty_in_stock = qty_in_stock;
     var image = image;
     var productname = productname;
-    var clo = colo.slice(1);
-    var szz = size.replace(/ +/g, "");
-    var quantity = $("#"+szz+available+clo+price).val();
+    var quantity = $("#"+sku).val();
+
 
 
     var datacart = {
-        'id':id,
+        'id':product_id,
         'size':size,
         'colo':colo,
         'price':price,
+        'sku' : sku,
+        'shopname' : shopname,
         'quantity':quantity,
-        'available':available,
+        'qty_in_stock':qty_in_stock,
         'image':image,
         'productname':productname
     };
@@ -1368,14 +1396,18 @@ function add_to_cart(id, size, colo, price, available,image,productname){
         return
     }
 
-    if(quantity > available){
-        $('.quantity-error').append("<p>There are only "+available+"  size " +size+" colour  "+colo+" available</p>");
+
+    var qty_stock = parseInt(qty_in_stock);
+    var qty = parseInt(quantity);
+
+    if( qty_stock < qty){
+        $('.quantity-error').append("<p>There are only "+qty_in_stock+"  size " +size+" colour <i class='fa fa-square' aria-hidden='true' style='color:"+colo+"';></i>  available</p>");
 
         return
     }
 
     if(quantity != "" && quantity != 0){
-
+       console.log(datacart);
         $.ajax({
             type: "get",
             url: "/addtocart",
@@ -1383,28 +1415,32 @@ function add_to_cart(id, size, colo, price, available,image,productname){
             dataType:"json",
             success: function (response) {
                 if(response.status === 200){
+
+                    console.log(response.message);
+                    console.log(response.notice);
+
+                    if(response.message != ''){
+                        Swal.fire({
+                            position: 'top-end',
+                            width: 600,
+                            title: '<p style="color:white; font-size:medium; margin:-5px;">'+response.message+'</p>',
+                            color: 'black',
+                            background: 'rgba(7, 254, 7, 0.872)',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    }
+
+                    if(response.notice != ''){
+                        $(".quantity-error").append(response.notice);
+                    }
+
                     cart();
                     subtotal();
-                    Swal.fire({
-                        position: 'top-end',
-                        width: 600,
-                        title: response.message,
-                        color: 'black',
-                        background: 'rgba(94, 228, 94, 0.634)',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-
-                    $(".alert-danger").append(response.qtybigger);
-
-                }
-
-                if(response.status === 201){
 
 
-                    $('#'+response.identify).css('background-color', 'rgba(197, 80, 80, 0.123)');
 
-                    $(".alert-danger").append(response.message);
+
                 }
 
 
@@ -1413,6 +1449,8 @@ function add_to_cart(id, size, colo, price, available,image,productname){
                     $.each(response.message, function (key, error) {
                          $('.alert-danger').append('<li>'+error+'</li>');
                     });
+
+                    console.log(response.message);
                 }
             }
         });
@@ -1426,7 +1464,7 @@ function add_to_cart(id, size, colo, price, available,image,productname){
 }
 
 //REMOVE OR ADD PRODUCT AT THE CART PAGE
-function removeaddcart(id, size, colour, price,quantity, available,mode){
+function removeaddcart(id, size, colour, price,quantity, available,sku,mode){
    $dta = {
     'id':id,
     'size':size,
@@ -1434,6 +1472,7 @@ function removeaddcart(id, size, colour, price,quantity, available,mode){
     'price':price,
     'quantity':quantity,
     'available':available,
+    'sku':sku,
     'mode':mode
    }
 
@@ -1828,7 +1867,7 @@ $('#addbrand').submit(function (e) {
                      +'<i class="fa fa-close text-light me-auto "  aria-hidden="true"></i>'
                     +'</div>'
 
-                    +'<input type="hidden" name="variid[]" value="" class="form-control form-control-sm" id="variid" >'
+                    +'<input type="hidden" name="sku[]" value="" class="form-control form-control-sm" id="variid" >'
 
                     +'<div class="col-md-4 mt-2">'
                     +'<label for="size" class="form-label">Size </label>'
@@ -1893,6 +1932,16 @@ $('#addbrand').submit(function (e) {
 
                     +'</div>');
     });
+
+    //Close and open variaions
+
+    $('.varia').on('click', function () {
+       $('.variations').toggle('slow');
+    });
+    $('.variation').on('click', function () {
+        $('.variations').toggle('slow');variation
+     });
+
 
  });
 

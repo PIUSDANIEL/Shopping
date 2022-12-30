@@ -525,109 +525,109 @@
 
                 {{-- -fLASH SALE --}}
                 <div class="row mt-3 small-screen">
-                <div class="col-12 d-flex justify-content-between">
-                    <span class=" rounded px-3 border  " >flash sale</span>
+                    <div class="col-12 d-flex justify-content-between">
+                        <span class=" rounded px-3 border  " >flash sale</span>
 
-                    <span class=" rounded px-3 border " ><a href="#" class="">see more</a></span>
-                </div>
-
-                <div class="loop owl-carousel owl-theme mt-1 p-1" id="">
-                    <div class="item">
-                        <div class="card mycard shadow rounded" style="">
-                            <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
-                            <div class="card-body px-1">
-                                <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
-                                <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="card mycard shadow rounded" style="">
-                            <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
-                            <div class="card-body px-1">
-                                <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
-                                <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
-                            </div>
-                        </div>
+                        <span class=" rounded px-3 border " ><a href="#" class="">see more</a></span>
                     </div>
 
-                    <div class="item">
-                        <div class="card mycard shadow rounded" style="">
-                            <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
-                            <div class="card-body px-1">
-                                <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
-                                <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
+                    <div class="loop owl-carousel owl-theme mt-1 p-1" id="">
+                        <div class="item">
+                            <div class="card mycard shadow rounded" style="">
+                                <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
+                                <div class="card-body px-1">
+                                    <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
+                                    <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="item">
-                        <div class="card mycard shadow rounded" style="">
-                            <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
-                            <div class="card-body px-1">
-                                <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
-                                <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
+                        <div class="item">
+                            <div class="card mycard shadow rounded" style="">
+                                <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
+                                <div class="card-body px-1">
+                                    <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
+                                    <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="item">
-                        <div class="card mycard shadow rounded" style="">
-                            <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
-                            <div class="card-body px-1">
-                                <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
-                                <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="card mycard shadow rounded" style="">
-                            <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
-                            <div class="card-body px-1">
-                                <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
-                                <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="item">
-                        <div class="card mycard shadow rounded" style="">
-                            <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
-                            <div class="card-body px-1">
-                                <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
-                                <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
+                        <div class="item">
+                            <div class="card mycard shadow rounded" style="">
+                                <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
+                                <div class="card-body px-1">
+                                    <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
+                                    <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="item">
+                            <div class="card mycard shadow rounded" style="">
+                                <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
+                                <div class="card-body px-1">
+                                    <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
+                                    <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="card mycard shadow rounded" style="">
+                                <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
+                                <div class="card-body px-1">
+                                    <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
+                                    <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="card mycard shadow rounded" style="">
+                                <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
+                                <div class="card-body px-1">
+                                    <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
+                                    <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="item">
-                        <div class="card mycard shadow rounded" style="">
-                            <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
-                            <div class="card-body px-1">
-                                <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
-                                <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
+                        <div class="item">
+                            <div class="card mycard shadow rounded" style="">
+                                <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
+                                <div class="card-body px-1">
+                                    <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
+                                    <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="item">
-                        <div class="card mycard shadow rounded" style="">
-                            <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
-                            <div class="card-body px-1">
-                                <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
-                                <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
+                        <div class="item">
+                            <div class="card mycard shadow rounded" style="">
+                                <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
+                                <div class="card-body px-1">
+                                    <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
+                                    <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="item">
-                        <div class="card mycard shadow rounded" style="">
-                            <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
-                            <div class="card-body px-1">
-                                <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
-                                <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
+                        <div class="item">
+                            <div class="card mycard shadow rounded" style="">
+                                <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
+                                <div class="card-body px-1">
+                                    <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
+                                    <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div class="card mycard shadow rounded" style="">
+                                <img src="{{ asset('images/images(5).jpg') }}" class="card-img-top"  height='80' alt="Sunset Over the Sea"/>
+                                <div class="card-body px-1">
+                                    <div class="col-12 mt-n3 productcard "><p>Nike sneakers mmmmmmm</p></div>
+                                    <div class="col-12 mt-n3 mb-n3"><h6>&#8358; 40,000</h6></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
                 </div>
 

@@ -83,6 +83,7 @@ class Productupload extends Controller
                 $product->specification  = $request->specification;
                 $product->percentage     = $request->percentage;
 
+                //if we have only one variat
                 if(count($request->price) == 1){
 
                        $product->price       = $request->price[0];
@@ -126,6 +127,7 @@ class Productupload extends Controller
                 $product->main_image =  '/public/images/'.$main_image_name;
 
                 $product->save();
+                $imagess = '';
 
                 if($request->hasFile('images')){
                     foreach($request->file('images') as $images){
@@ -139,7 +141,7 @@ class Productupload extends Controller
                             $path =  $images->move( $fileDestination, $name);
                             //all image in an array
 
-                            $imagess[] = '/public/images/'.$name;
+                            $imagess .= '/public/images/'.$name.',';
                         }
 
                     }
@@ -147,7 +149,7 @@ class Productupload extends Controller
 
                 $productimage = new images;
                 $productimage->product_id = $product->id;
-                $productimage->images = json_encode($imagess);
+                $productimage->images = $imagess;
                 $productimage->save();
 
                 for($i = 0; $i < count($request->price); $i++ ){
@@ -185,6 +187,7 @@ class Productupload extends Controller
                 'shopname'    => 'required|string',
                 'size.*'        => 'nullable|string',
                 'colour.*'      => 'nullable|string',
+                'sku.*'        => 'nullable|string',
                 'brand'       => 'nullable|string',
                 'quantity.*'    => 'required|integer',
                 'description' => 'nullable|string',
@@ -198,7 +201,7 @@ class Productupload extends Controller
                 'sub_categories' => 'required|string',
                 'specification'  => 'nullable|string',
                 'percentage'     => 'nullable|string',
-                
+
 
         ]);
 
@@ -238,7 +241,7 @@ class Productupload extends Controller
 
 
 
-
+            $newimages = '';
             if($request->hasFile('imagesegit')){
                 foreach($request->file('imagesegit') as $editimages){
                     if($editimages->isValid()){
@@ -251,7 +254,7 @@ class Productupload extends Controller
                         $path =  $editimages->move( $fileDestination, $name_edit);
                         //all image in an array
 
-                        $newimages[] = '/public/images/'.$name_edit;
+                        $newimages .= '/public/images/'.$name_edit.',';
                     }
 
                 }
@@ -267,7 +270,7 @@ class Productupload extends Controller
 
 
             product::where('id', $request->productid)
-            ->update([
+             ->update([
 
                'productname' => $request->productname,
                //'price' => $request->price,
@@ -291,41 +294,89 @@ class Productupload extends Controller
 
             ]);
 
+
+
+
             images::where('product_id', $request->productid)->update([
                 'images'=> $newimages
             ]);
 
+            /*
             for($i = 0; $i < count($request->price); $i++ ){
                 if($request->variid[$i] !== ""){
-                product_item::where('id', $request->variid[$i])->update([
-                    'size'=> $request->size[$i],
-                    'qty_in_stock' => $request->quantity[$i],
-                    'colour' => $request->colour[$i],
-                    'price' => $request->price[$i],
+                    product_item::where('id', $request->variid[$i])->update([
+                        'size'=> $request->size[$i],
+                        'qty_in_stock' => $request->quantity[$i],
+                        'colour' => $request->colour[$i],
+                        'price' => $request->price[$i],
 
-                ]);
-             }
-
-             for($i = 0; $i < count($request->price); $i++ ){
-                if($request->variid[$i] == ""){
-                    $produc = new product_item;
-                    $produc->product_id =$request->productid ;
-                    $produc->SKU = substr(md5(microtime()),0,12);
-                    //dd($request->quantity[$i]);
-                    $produc->qty_in_stock = $request->quantity[$i];
-       
-                    $produc->size = $request->size[$i];
-                    $produc->colour = $request->colour[$i];
-                    $produc->price = $request->price[$i];
-                    $produc->save();
+                    ]);
                 }
+
+                for($i = 0; $i < count($request->price); $i++ ){
+                    if($request->variid[$i] == ""){
+                        $produc = new product_item;
+                        $produc->product_id =$request->productid ;
+                        $produc->SKU = substr(md5(microtime()),0,12);
+                        //dd($request->quantity[$i]);
+                        $produc->qty_in_stock = $request->quantity[$i];
+
+                        $produc->size = $request->size[$i];
+                        $produc->colour = $request->colour[$i];
+                        $produc->price = $request->price[$i];
+                        $produc->save();
+                    }
+                }
+
+
+
+
+            }
+            */
+            DB::table('product_items')->where('product_id','=',$request->productid)->delete();
+
+             //if we have only one variat
+             if(count($request->price) == 1){
+
+                product::where('id', $request->productid)
+                ->update([
+                  'price' =>  $request->price[0],
+
+               ]);
+
              }
+            //if we have only one variat
+            if(count($request->price) > 1){
+                product::where('id', $request->productid)
+                ->update([
+                  'price' =>  min($request->price),
+                  'price_min' => min($request->price),
+
+                  'price_max' => max($request->price)
+
+               ]);
+            }
+
+            for($i = 0; $i < count($request->price); $i++ ){
+
+                $produc = new product_item;
+                $produc->product_id =  $request->productid;
+
+                if($request->sku[$i] == "" || $request->sku[$i] == null){
+                      //dd($request->quantity[$i]);
+                    $produc->SKU = substr(md5(microtime()),0,12);
+                }else{
+                    $produc->SKU = $request->sku[$i];
+                }
 
 
-            
-                
-           }
+                $produc->qty_in_stock = $request->quantity[$i];
 
+                $produc->size = $request->size[$i];
+                $produc->colour = $request->colour[$i];
+                $produc->price = $request->price[$i];
+                $produc->save();
+            }
 
 
 
@@ -336,6 +387,7 @@ class Productupload extends Controller
                 'status'=>200,
                 'message'=> $request->productname.' '.'edited succcessful'
             ]);
+
         }
 
 
@@ -345,7 +397,7 @@ class Productupload extends Controller
     public function deleteproduct($id){
 
 
-        if( Product::where('id', $id)->update(['deleted' => '1','deleted_at' => now()])){
+        if( product::where('id', $id)->update(['deleted' => '1','deleted_at' => now()])){
 
             return response()->json([
                 'status'=>200,
@@ -415,8 +467,8 @@ class Productupload extends Controller
             }
 
         $products = DB::table('products')
-                        ->where('products.shopname','=',$user)
-                        ->where('products.deleted','=', 0)
+                        ->where('shopname','=',$user)
+                        ->where('deleted','=', 0)
                         ->select('id','productname','main_image','categories','sub_categories')
                         ->get();
 
@@ -424,8 +476,11 @@ class Productupload extends Controller
 
         for($i=0; $i < count($product); $i++){
            $id = $product[$i]['id'];
+
            $categ =  $product[$i]['categories'];
+
            $subcateg =  $product[$i]['sub_categories'];
+
            $product_item = DB::table('product_items')->where('product_id',$id)->select('qty_in_stock','price','size','colour')->get();
            $product[$i]['product_item'] =  $product_item;
 
@@ -447,7 +502,7 @@ class Productupload extends Controller
         //$products = DB::table('products')->where('id',$id)->get();
         $products = DB::table('products')
         ->where('id','=',$id)
-        ->where('products.deleted','=', 0)
+        ->where('deleted','=', 0)
         //->select('id','productname','main_image','categories','sub_categories')
         ->get();
 
@@ -469,7 +524,11 @@ class Productupload extends Controller
 
 
                 $product_imgs = DB::table('images')->where('product_id',$id)->select('images')->get();
-                $product[$i]['images'] =  $product_imgs;
+
+                $img = rtrim($product_imgs[0]->images,',');
+
+                $product[$i]['images'] = $img ;
+
 
                 }
 
@@ -664,29 +723,56 @@ class Productupload extends Controller
    public function detailsmodal($id){
 
         $product = DB::table('products')
-                        ->join('brands','brands.id','=','products.brand')
-                        ->where('products.id',$id)
-                        ->where('products.deleted', 0)
+                        ->where('id',$id)
+                        ->where('deleted', 0)
                         ->get();
+        $producs = json_decode($product,true);
 
-        if(count($product) == 0){
+        for($i = 0; $i < count($producs); $i++){
+           $id = $producs[$i]['id'];
+           $brandid = $producs[$i]['brand'];
 
 
-            /*
+           $brand = DB::table('brands')->where('id',$brandid)->select('brand')->get();
+           $producs[$i]['brand'] =  $brand;
+
+
+           $images = DB::table('images')->where('product_id',$id)->select('images')->get();
+           $ima = $images[0]; //json_decode($images[0][0],true);
+
+           foreach($ima as $m){
+            $mm = rtrim($m,',');
+
+            $imk = explode(',',$mm);
+
+           }
+
+          // dd($imk);
+
+           $producs[$i]['images'] = $imk;
+
+           $variaion = DB::table('product_items')->where('product_id',$id)->get();
+           $producs[$i]['variation'] = $variaion;
+
+        }
+
+
+        if(count($producs) == 0){
+
             return response()->json([
                 'status'=>400,
                 'message'=>"Product does not exist!"
             ]);
-            */
+
         }else{
-              /*
+
             return response()->json([
                 'status'=>200,
-                'message'=>$product
+                'message'=>$producs
             ]);
-            */
 
-            return view('Mainpage.product_details', compact('product'));
+
+           // return view('Mainpage.product_details', compact('producs'));
         }
 
 

@@ -205,6 +205,17 @@
                                                     @endif
                                                 >
 
+
+                                            <div class="col-md-4 mt-2">
+                                                <label for="main_image">Main images</label>
+                                                <input type="file" class="form-control-file" name="main_image" id="main_image" placeholder="image" aria-describedby="fileHelpId">
+                                            </div>
+
+                                            <div class="col-md-4 mt-2">
+                                                <label for="images">images</label>
+                                                <input type="file" class="form-control-file" name="images[]" id="images" placeholder="images" aria-describedby="fileHelpId"  multiple>
+                                            </div>
+
                                             <div class="col-md-4 mt-2">
                                                     <label for="productname" class="form-label">Product name</label>
                                                     <input type="text" name="productname" class="form-control form-control-sm name" id="productname" value="" >
@@ -220,18 +231,6 @@
                                             <div class=" col-lg-4 mt-2">
                                                 <label for="percentage" class="form-label">Percentage</label>
                                                 <input type="number" name="percentage" value="{{ old('percentage') }}" class="form-control form-control-sm" id="editpercentage" >
-                                            </div>
-
-
-
-                                            <div class="col-md-4 mt-2">
-                                                <label for="main_image">Main images</label>
-                                                <input type="file" class="form-control-file" name="main_image" id="main_image" placeholder="image" aria-describedby="fileHelpId">
-                                            </div>
-
-                                            <div class="col-md-4 mt-2">
-                                                <label for="images">images</label>
-                                                <input type="file" class="form-control-file" name="images[]" id="images" placeholder="images" aria-describedby="fileHelpId"  multiple>
                                             </div>
 
                                             <div class="col-md-4 mt-2">
@@ -255,30 +254,34 @@
                                                     </select>
                                             </div>
 
-
                                             <div class="col-md-4 mt-2">
+                                                <label for="search">Posible search</label>
+                                                <textarea class="form-control" name="search" value="{{ old('search') }}" id="search" rows="3"></textarea>
+                                                <div class=" p-1 rounded" style="background-color: rgb(55, 54, 54);">
+                                                    <p style="color: white;">
+                                                        Note : Posible search helps customers to find your products easily
+                                                        please write down keywords related to your product without comma
+                                                        eg: if the product is men's shoes your keywords could be
+                                                        men zara leather shoes and more..
+
+                                                    </p>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-12 mt-2">
                                                     <label for="description">Description</label>
-                                                    <textarea class="form-control" name="description" value="{{ old('description') }}" id="description" rows="3"></textarea>
+                                                    <textarea class="form-control summernote" name="description" value="{{ old('description') }}" id="description" rows="3"></textarea>
                                             </div>
 
-                                            <div class="col-md-4 mt-2">
+
+
+                                            <div class="col-md-12 mt-2">
                                                     <label for="specification">Specification</label>
-                                                    <textarea class="form-control" name="specification" value="{{ old('specification') }}" id="specification" rows="3"></textarea>
+                                                    <textarea class="form-control summernote" name="specification" value="{{ old('specification') }}" id="specification" rows="3"></textarea>
                                             </div>
 
-                                            <div class="col-md-4 mt-2">
-                                                    <label for="search">Posible search</label>
-                                                    <textarea class="form-control" name="search" value="{{ old('search') }}" id="search" rows="3"></textarea>
-                                                    <div class=" p-1 rounded" style="background-color: rgb(55, 54, 54);">
-                                                        <p style="color: white;">
-                                                            Note : Posible search helps customers to find your products easily
-                                                            please write down keywords related to your product without comma
-                                                            eg: if the product is men's shoes your keywords could be
-                                                            men zara leather shoes and more..
 
-                                                        </p>
-                                                    </div>
-                                            </div>
 
 
 
@@ -358,7 +361,7 @@
 
 
 
-                                        <form  id="productedit"  enctype="multipart/form-data" class="row g-3 " >
+                                        <form id="productedit"  enctype="multipart/form-data" class="row g-3 " >
 
                                                 @csrf
 
@@ -449,21 +452,23 @@
                                                     </select>
                                                 </div>
 
-
-                                                <div class=" col-lg-4 mt-2">
-                                                    <label for="description">Description</label>
-                                                    <textarea class="form-control" name="description" value="{{ old('description') }}" id="editdescription" rows="3"></textarea>
-                                                </div>
-
-                                                <div class=" col-lg-4 mt-2">
-                                                    <label for="specification">Specification</label>
-                                                    <textarea class="form-control" name="specification" value="{{ old('specification') }}" id="editspecification" rows="3"></textarea>
-                                                </div>
-
                                                 <div class=" col-lg-4 mt-2">
                                                     <label for="search">Posible search</label>
                                                     <textarea class="form-control" name="search" value="{{ old('search') }}" id="editsearch" rows="3"></textarea>
                                                 </div>
+
+
+                                                <div class=" col-12 mt-2">
+                                                    <label for="description">Description</label>
+                                                    <textarea class="form-control summernote" name="description" value="{{ old('description') }}" id="editdescription" rows="3"></textarea>
+                                                </div>
+
+                                                <div class=" col-12 mt-2">
+                                                    <label for="specification">Specification</label>
+                                                    <textarea class="form-control summernote" name="specification" value="{{ old('specification') }}" id="editspecification" rows="3"></textarea>
+                                                </div>
+
+
 
                                                 <div class="row w-100 mx-auto mt-2 p-1 ">
                                                     <button class="btn btn-sm bg-dark addmoreattr" id="">

@@ -31,6 +31,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
    <link rel="stylesheet" href="{{ asset('../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
    <link rel="stylesheet" href="{{ asset('../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 
+    <!-- summernote -->
+  <link rel="stylesheet" href="{{ asset('../../plugins/summernote/summernote-bs4.min.css') }}">
+
+
    <!--Sweet alert---->
    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

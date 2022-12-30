@@ -607,41 +607,80 @@
                             </div>
                             <div class="modal-body">
                                 <div class="row">
-                                    <div class="col-md-12 col-lg-6">
 
-                                        <div id="carouselExampleCaptions" class="carousel  slide rounded" data-bs-ride="carousel">
+                                    <div class="col-md-12 col-lg-4 rounded shadow">
 
-                                            <div class="carousel-inner caro rounded">
+                                            <div id="carouselId" class="carousel slide " data-bs-ride="carousel">
 
+                                                    <div class="carousel-inner" role="listbox">
+
+
+                                                    </div>
+                                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
+                                                        <span class="carousel-control-prev-icon " aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.282);"></span>
+                                                        <span class="visually-hidden">Previous</span>
+                                                    </button>
+                                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselId" data-bs-slide="next">
+                                                        <span class="carousel-control-next-icon " aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.347);"></span>
+                                                        <span class="visually-hidden">Next</span>
+                                                    </button>
                                             </div>
-                                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Previous</span>
-                                            </button>
-                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Next</span>
-                                            </button>
-                                        </div>
+
+
+                                            <!-- The Modal/Lightbox -->
+                                            <div id="myModal" class="mod">
+
+                                                <span class="close cursor" onclick="closeModal()">&times;</span>
+                                                <div class="mod-content">
+
+
+
+
+                                                    <!-- Next/previous controls -->
+
+
+
+                                                </div>
+                                            </div>
+
+
                                     </div>
 
-                                    <div class="col-md-12 col-lg-6">
-                                        <h6 class="mt-2" id="detailsname"></h6 cla>
+                                    <div class="col-md-12 col-lg-5 rounded shadow">
+
+                                        <h5 class="mt-2" id="detailsname"></h5>
                                         <p id="detailsbrand">Brand: XIAOMI | Similar products from XIAOMI</p>
                                         <p class="small">
-                                            <i class="fa fa-star small" aria-hidden="true"></i>
-                                            <i class="fa fa-star small" aria-hidden="true"></i>
-                                            <i class="fa fa-star small" aria-hidden="true"></i>
-                                            <i class="fa fa-star small" aria-hidden="true"></i>
-                                            <i class="fa fa-star small" aria-hidden="true"></i>
+                                            <i class="fa fa-star small " style="color: orange;" aria-hidden="true"></i>
+                                            <i class="fa fa-star small " style="color: orange;" aria-hidden="true"></i>
+                                            <i class="fa fa-star small " style="color: orange;" aria-hidden="true"></i>
+                                            <i class="fa fa-star small " style="color: orange;" aria-hidden="true"></i>
+                                            <i class="fa fa-star small " style="color: orange;" aria-hidden="true"></i>
                                         </p>
                                         <hr>
                                         <p class="money" id="detailsprice"></p>
                                         <p class="" ><del class="mr-4" id="detailslistprice"> </del>    <span style="background-color: rgba(238, 0, 0, 0.114);" class="ml-4 rounded p-1 text-danger" id="detailspercent"> </span></p>
+                                        <p class="detailsinstock text-danger small"></p>
                                         <p><i class="fa fa-heart" aria-hidden="true"></i> Add to wishlist</p>
-                                        <div class="row alert-danger quantity-error"></div>
 
-                                        <div class="row" id="detailsize"></div>
+                                        <h6 class="" id="detailsize"></h6>
+                                        <p id="detailscolour"></p>
+
+                                        <div class="col-12 mb-1  quantity-error" style="background-color: rgba(221, 56, 56, 0.179); color:red;"></div>
+
+
+                                        <div class="col-8 col-md-6 col-lg-6" id="detailsqty">
+
+                                        </div>
+                                        <div class="variation"></div>
+                                        <div class="row varia d-flex justify-content-around">
+
+                                        </div>
+                                        <div class="container  variations mt-2" style="display: none;">
+
+
+                                        </div>
+
 
                                         <div class="card" >
 
@@ -651,6 +690,11 @@
 
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-3 rounded shadow">
+                                        <h1>ggg</h1>
+
                                     </div>
                                 </div>
 
