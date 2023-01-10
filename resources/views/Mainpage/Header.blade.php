@@ -263,7 +263,7 @@
                             <div class="card   p-0 ms-auto " style="border-radius:10px; width:70px; height:26px; background-color: transparent; ">
                                 <img src="{{ asset('images/shopping-cart.png') }}" width="25px" height="25px" class="img-fluid rounded  " alt="cart">
                                 <div class="card-img-overlay ">
-                                    <p class=" ml-4 mt-n3 mycart bold" id=""  style="color:black;font-weight: 700; "></p>
+                                    <p class=" ml-4  mycart bold" id=""  style="color:black;font-weight: 700; margin-top:-13px;"></p>
                                 </div>
                             </div>
                         </a>
@@ -463,16 +463,15 @@
                         @endif
                     </div>
 
-                    <div class="col-2">
-                       <a href="{{ route('cart_product') }}" class="p-0 ms-auto">
-                            <div class="card  p-0 ms-auto " style="border-radius:10px; width:70px; height:30px; background-color: transparent; ">
-                                <img src="{{ asset('images/shopping-cart.png') }}" width="30px" height="30px" class="img-fluid rounded  " alt="cart">
-                                <div class="card-img-overlay ">
-                                    <h6 class=" ml-4 mt-n2 rounded-circle mycart bold" style="width: 22px; height:22px; font-weight: 700; color:black; "></h6>
-                                </div>
+                    <a href="{{ route('cart_product') }}" class="col-2 ">
+                        <div class="card   p-0 ms-auto " style="border-radius:10px; width:70px; height:26px; background-color: transparent; ">
+                            <img src="{{ asset('images/shopping-cart.png') }}" width="25px" height="25px" class="img-fluid rounded  " alt="cart">
+                            <div class="card-img-overlay ">
+                                <p class=" ml-4  mycart bold" id=""  style="color:black;font-weight: 700; margin-top:-13px;"></p>
                             </div>
-                       </a>
-                    </div>
+                        </div>
+
+                    </a>
 
 
                     <div class="col-12 d-flex mt-1 mb-n2">

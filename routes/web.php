@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\Admincontroller;
 use App\Http\Controllers\Cart\Cartcontroller;
 use App\Http\Controllers\Editor\Editorcontroller;
+use App\Http\Controllers\Order\Ordercontroller;
 use App\Http\Controllers\Product\Productupload;
 use App\Http\Controllers\Seller\Sellercontroller;
 use App\Http\Controllers\User\Usercontroller;
@@ -44,6 +45,10 @@ Route::get('/getbrand', [Admincontroller::class,'getbrand'])->name('getbrand');
 Route::post('search',[Productupload::class,'search'])->name('search');
 
 Route::get('cart',[Cartcontroller::class,'cart'])->name('cart');
+
+Route::get('checkout',[Ordercontroller::class,'checkout'])->name('checkout');
+
+Route::get('orders',[Ordercontroller::class,'orders'])->name('orders');
 
 Route::get('cart_product',[Cartcontroller::class,'cart_product'])->name('cart_product');
 

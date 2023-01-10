@@ -97,8 +97,7 @@ $(document).ready(function () {
                 'search':search2,
                 '_token': _token
             }
-            //console.log(data);
-            //alert(search);
+
             $.ajax({
                 type: "POST",
                 url: "/search",
@@ -1201,8 +1200,7 @@ $('#editsubcategory').submit(function (e) {
                         $('#detailsize').append('Size | '+detais.variation[0]['size']);
 
                         $('#detailsqty').append('<div class="input-group mb-3">'
-                          +'<input type="number" class="form-control form-control-sm"  aria-label="Button" aria-describedby="" id="'+detais.variation[0]['SKU']+'" value="" min="1" max="" placeholder="Qty">'
-                          +'<button class="btn btn-sm btn-info px-2" type="button" onclick="add_to_cart('+id+',\''+detais.variation[0]['size']+'\',\''+detais.variation[0]['colour']+'\',\''+detais.variation[0]['price']+'\',\''+detais.variation[0]['qty_in_stock']+'\',\''+detais.main_image+'\',\''+detais.productname+'\',\''+detais.variation[0]['SKU']+'\',\''+detais.shopname+'\')" id="">Add to cart <i class="fa fa-shopping-basket" aria-hidden="true"></i> </button>'
+                          +(detais.variation[0]['qty_in_stock'] < 1 ?'<button class="btn btn-sm ms-auto btn-secondary" >out of stock</button>':'<input type="number" class="form-control form-control-sm"  aria-label="Button" aria-describedby="" id="'+detais.variation[0]['SKU']+'" value="" min="1" max="" placeholder="Qty"><button class="btn btn-sm btn-info px-2" type="button" onclick="add_to_cart('+id+',\''+detais.variation[0]['size']+'\',\''+detais.variation[0]['colour']+'\',\''+detais.variation[0]['price']+'\',\''+detais.variation[0]['qty_in_stock']+'\',\''+detais.main_image+'\',\''+detais.productname+'\',\''+detais.variation[0]['SKU']+'\',\''+detais.shopname+'\')" id="">Add to cart <i class="fa fa-shopping-basket" aria-hidden="true"></i> </button>')
                           +'</div>');
 
 
@@ -1232,15 +1230,14 @@ $('#editsubcategory').submit(function (e) {
 
 
 
-                                $('.variations').append('<div class="row rounded p-1 shadow  mt-3"><div class="col-6 col-lg-3">'+varian['size']+'</div>'
+                                $('.variations').append('<div class="row rounded p-1 shadow   mt-3"><div class="col-6 col-lg-3">'+varian['size']+'</div>'
                                 +'<div class="col-6 col-lg-1"> <i class="fa fa-square" aria-hidden="true" style="color:'+varian['colour']+';"></i></div>'
                                 +'<div class="col-6 col-lg-3">&#8358;'+varianprice+'</div>'
-                                +'<div class="col-6 col-lg-5"> <div class="input-group ">'
-                                +'<input type="text" class="form-control form-control-sm" aria-label="" id="'+varian['SKU']+'" aria-describedby="button-addon2">'
-                                +'<button class="btn btn-sm btn-info " type="button" onclick="add_to_cart('+id+',\''+varian['size']+'\',\''+varian['colour']+'\',\''+varian['price']+'\',\''+varian['qty_in_stock']+'\',\''+detais.main_image+'\',\''+detais.productname+'\',\''+varian['SKU']+'\',\''+detais.shopname+'\')" id="">Add <i class="fa fa-shopping-basket" aria-hidden="true"></i> </button>'
+                                +'<div class="col-6 col-lg-5 "> <div class="input-group ">'
+                                +(varian['qty_in_stock'] < 1 ?'<button class="btn btn-sm ms-auto btn-secondary" >out of stock</button>':'<input type="text" class="form-control form-control-sm" aria-label="" id="'+varian['SKU']+'" aria-describedby="button-addon2"><button class="btn btn-sm btn-info " type="button" onclick="add_to_cart('+id+',\''+varian['size']+'\',\''+varian['colour']+'\',\''+varian['price']+'\',\''+varian['qty_in_stock']+'\',\''+detais.main_image+'\',\''+detais.productname+'\',\''+varian['SKU']+'\',\''+detais.shopname+'\')" id="">Add <i class="fa fa-shopping-basket" aria-hidden="true"></i> </button>')
                                 +'</div> </div>'
-                                +(varian['qty_in_stock'] < 4 ? '<div class=" col-12 mt-n5"><p class="text-danger small "><i class="fa fa-question-circle" aria-hidden="true"></i> '+varian['qty_in_stock']+' units left</p></div>':'')
-                                +'</div>');
+                                +'</div>'
+                                +(varian['qty_in_stock'] < 4 ? '<p class="text-danger small "><i class="fa fa-question-circle" aria-hidden="true"></i> '+varian['qty_in_stock']+' units left</p>':''));
 
 
 
@@ -1490,15 +1487,18 @@ function removeaddcart(id, size, colour, price,quantity, available,sku,mode){
             subtotal();
             location.reload();
 
-           Swal.fire({
+
+          Swal.fire({
             position: 'top-end',
             width: 600,
-            title: response.message,
+            title: '<p style="color:white; font-size:medium; margin:-5px;">'+response.message+'</p>',
             color: 'black',
-            background: 'rgba(94, 228, 94, 0.634)',
+            background: 'rgba(7, 254, 7, 0.872)',
             showConfirmButton: false,
-            timer: 1500
+            timer: 2000
           });
+
+
         }
 
 

@@ -9,11 +9,11 @@
                 <h6 class="" style="font-weight: 700;">Subtotal <span class=" bg-info p-2 rounded subtotal"></span></h6>
 
                 @auth
-                    <button type="button" class="btn btn-sm mt-n2  btn-info ms-auto">
+                    <a href="{{ route('orders') }}" class="btn btn-sm mt-n2  btn-info ms-auto">
                         Checkout <span class="badge"> <i class="fa fa-credit-card text-dark" aria-hidden="true"></i> </span>
-                    </button>
+                    </a>
                 @else
-                  <a href="#" class="bg-info p-1 rounded ms-auto">Please Login <span><i class="fa fa-user-circle" aria-hidden="true"></i> </span></a>
+                  <a href="{{ route('user.login') }}" class="bg-info p-1 rounded ms-auto">Please Login <span><i class="fa fa-user-circle" aria-hidden="true"></i> </span></a>
                 @endauth
             </div>
         </div>
